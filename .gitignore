@@ -1,0 +1,4 @@
+*.pyc
+*.pyo
+dump_files/*
+!dump_files/*.py

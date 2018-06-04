@@ -1,0 +1,13 @@
+#!/bin/bash
+##PBS -W group_list=uafaqua
+##PBS -q standard_16
+##PBS -l walltime=3:00:00
+##PBS -l nodes=15:ppn=16
+##PBS -j oe
+#. /opt/modules-3.2.6/Modules/3.2.6/init/bash
+#export MODULES_NO_OUTPUT=1
+#module load /home/qiu05/own.modules
+#export -n MODULES_NO_OUTPUT
+
+cd /home/qiu05/HOME/apps/genx_pc_qiu/supportive_functions/backcor
+mpirun --mca mpi_warn_on_fork 0 -np 64  python ./data_integration_mpi_debug.py 2>&1 |tee job.$PBS_JOBID.out

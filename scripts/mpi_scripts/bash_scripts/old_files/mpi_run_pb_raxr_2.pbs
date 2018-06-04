@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -W group_list=uafaqua
+#PBS -q standard_16
+#PBS -l walltime=1:00:00
+#PBS -l nodes=2:ppn=16
+#PBS -j oe
+/etc/profile.d/modules.sh
+module load python/2.7.4
+source $HOME/python/bin/activate
+cd $CENTER/temp_gx_files
+file=*_set2_May8.gx
+FIRST_GRID=$((51+23))
+FIRST_DATASET=13
+NUMBER_SPECTRA=3
+for i in $(seq 0 $NUMBER_SPECTRA)
+do
+    for gx in $file;do
+	if [ `ls $file | wc -l` != 0 ] ;
+	then
+        ((a=FIRST_GRID+$i*5))
+        ((b=FIRST_DATASET+$i))
+        mpirun --mca mpi_warn_on_fork 0 -np 1 python $HOME/genx_mpi_qiu/rolling_grid_raxr.py $gx $a $b
+	mpirun --mca mpi_warn_on_fork 0 -np 32  python $HOME/genx_mpi_qiu/GenX_run_multiple_mpi_new_3_raxr.py $gx 32 2>&1 |tee job.$PBS_JOBID.out 
+	mpirun --mca mpi_warn_on_fork 0 -np 1 python $HOME/genx_mpi_qiu/rolling_grid_raxr.py $gx $a $b ;
+	else
+	sleep 1
+	fi;
+    done
+done
+cd $HOME/genx_mpi_qiu
+rm -f *.o*

@@ -1,0 +1,32 @@
+#!/bin/bash
+##PBS -W group_list=uafaqua
+##PBS -q standard_16
+##PBS -l walltime=5:00:00
+##PBS -l nodes=4:ppn=16
+##PBS -j oe
+
+cd $HOME/temp_gx_files
+file=*_Jun17.gx
+FIRST_GRID=43
+FIRST_DATASET=1
+NUMBER_SPECTRA=21
+for i in $(seq 0 $NUMBER_SPECTRA)
+do
+    for gx in $file;do
+	if [ `ls $file | wc -l` != 0 ] ;
+	then
+	mpirun --mca mpi_warn_on_fork 0 -np 64  python $HOME/genx_pc_qiu/MPI_run_files/GenX_run_multiple_mpi_new_3_raxr.py $gx 64 2>&1 |tee job.$PBS_JOBID.out 
+	((a=FIRST_GRID+$i*6))
+	((b=FIRST_DATASET+$i))
+	mpirun --mca mpi_warn_on_fork 0 -np 1 python $HOME/genx_pc_qiu/MPI_run_files/rolling_grid_raxr.py $gx $a $b 
+        ((a=FIRST_GRID+$i*6+6))
+        ((b=FIRST_DATASET+$i+1))
+        mpirun --mca mpi_warn_on_fork 0 -np 1 python  $HOME/genx_pc_qiu/MPI_run_files/rolling_grid_raxr.py $gx $a $b ;
+	else
+	sleep 1
+	fi;
+    done
+done
+cd $HOME/genx_pc_qiu/MPI_run_files
+rm -f *.o*
+rm -f *.e*

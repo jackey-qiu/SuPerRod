@@ -1,0 +1,38 @@
+#!/bin/bash
+##PBS -W group_list=uafaqua
+##PBS -q standard_16
+##PBS -l walltime=3:00:00
+##PBS -l nodes=15:ppn=16
+##PBS -j oe
+#. /opt/modules-3.2.6/Modules/3.2.6/init/bash
+#export MODULES_NO_OUTPUT=1
+#module load /home/qiu05/own.modules
+#export -n MODULES_NO_OUTPUT
+##change these locations accordingly
+sed -i -e 's/7/1/g' /home/qiu05/SuPerRod/global_vars.py
+sed -i -e 's/break/run/g' /home/qiu05/HOME/temp_model/run_or_break
+cd $HOME/HOME/temp_model
+
+#match a right tag
+file='*_May31.gx'
+#number of processors to request
+proc_num=256
+while  [ `ls $file | wc -l` != 0 ]
+do
+    for gx in $file;do
+	if [ `ls $file | wc -l` != 0 ] ;
+	then
+        #eval "export `mpirun env | grep OMPI_MCA_orte_precondition_transports`"
+	mpiexec --mca mpi_warn_on_fork 0 -np $proc_num python $HOME/SuPerRod/scripts/mpi_scripts/python_scripts/Model_dependent_fit_mpi.py $gx $proc_num 2>&1 |tee job.$PBS_JOBID.out
+	sed -i -e 's/break/run/g' /home/qiu05/HOME/temp_model/run_or_break
+	rm -f $gx;
+	else
+	sleep 1
+	fi;
+    done
+done
+
+#remove run files
+cd $HOME/SuPerRod/scripts/bash_scripts
+rm -f *.o*
+rm -f *.e*

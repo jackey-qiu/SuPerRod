@@ -1,0 +1,15 @@
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: C:\Anaconda2\envs\genx
+
+  added / updated specs: 
+    - wxpython
+
+
+The following NEW packages will be INSTALLED:
+
+    wxpython: 3.0-py27_0
+
+Proceed ([y]/n)? 

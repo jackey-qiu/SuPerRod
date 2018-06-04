@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd $HOME/temp_gx_files
+file=*_Feb_22.gx
+while  [ `ls $file | wc -l` != 0 ]
+do
+    for gx in $file;do
+	if [ `ls $file | wc -l` != 0 ] ;
+	then
+	mpirun --mca mpi_warn_on_fork 0 -np 256  python $HOME/genx_pc_qiu/MPI_run_files/GenX_run_multiple_mpi_new_3.py $gx 256 2>&1 |tee job.$PBS_JOBID.out 
+	rm -f $gx;
+	else
+	sleep 1
+	fi;
+    done
+done
+cd $HOME/genx_mpi_qiu
+rm -f *.o*
+rm -f *.e*
