@@ -29,7 +29,7 @@ plot_e_FS=True                              ##plot electron density profiles bas
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=True                                                                     ##plot RAXR results?##
 plot_AP_Q=False                                                              ##plot Foriour components?##
-gx_file_path='P:\\temp_model\\MD_RAXR_Th_mica_LiCl_100mM_superrod_run1_Jun01_ran.gx'                         ##where is your gx file##
+gx_file_path='/Users/cqiu/model_file/scale_RAXR_Th_mica_LiCl_100mM_superrod_run2_Jun05combined_ran.gx'                         ##where is your gx file##
 ##########################################################################################################
 
 

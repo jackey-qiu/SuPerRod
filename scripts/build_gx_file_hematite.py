@@ -10,22 +10,22 @@ import filehandling as io
 import numpy as np
 
 ##################################################################Tune the file here only################################################################
-gx_file_name='As_cmp_CS_OS_CS_OS_run1_May30.gx'                                                                                                                             #                                                                                                                                         #
+gx_file_name='As_cmp_CS_OS_CS_OS_run1_Jun12.gx'                                                                                                                             #                                                                                                                                         #
                                                                                                                                                         #
-path_of_data='P:\\apps\\SuPerRod\\batchfile\\temp_full_dataset_As.dat'                                                               #
+path_of_data='/Users/cqiu/app/SuPerRod/dump_files/temp_full_dataset.dat'                                                               #
 data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data_loader plugin                                                          #
                                                                                                                                                         #
 domain_setup_HLT=[3,3]#2 for short HLT, 3 for long HLT                                                                                                    #
-domain_setup_FLT=[0,0]#0 for short FLT, 1 for long FLT                                                                                              #
-water_layer_number=[0,0,0,0]                                                                                                                          #
+domain_setup_FLT=[0]#0 for short FLT, 1 for long FLT                                                                                              #
+water_layer_number=[0,2,2]                                                                                                                          #
 atom_group_depth_one_domain=10                                                                                                                          #
-atom_group_scheme_inter_domains=[[1,0],[3,2]]#starting from 0 (0 for Domain1)                                                                           #
-atom_group_depth_inter_domains=[[0,10],[0,10]]                                                                                                          #
+atom_group_scheme_inter_domains=[[1,0]]#starting from 0 (0 for Domain1)                                                                           #
+atom_group_depth_inter_domains=[[0,10]]                                                                                                          #
                                                                                                                                                         #
 sorbate='As'                                                                                                                                            #
 LOCAL_STRUCTURE_MATCH_LIB='{\'trigonal_pyramid\':[\'Pb\'],\'octahedral\':[\'Sb\',\'Fe\',\'Cd\',\'Cu\',\'Zn\'],\'tetrahedral\':[\'As\',\'P\',\'Cr\']}'   #
-binding_mode=[['CS_H'],['OS_H'],['CS_F'],['OS_F']]                                                                                  #
-O_NUMBER=[[2,2],[4,4],[2,2],[4,4]]                                                                                                                #
+binding_mode=[['CS_H'],['OS_H'],['OS_F']]                                                                                  #
+O_NUMBER=[[2,2],[4,4],[4,4]]                                                                                                                #
                                                                                                                                                         #
 num_raxr_datasets=9                                                                                                                                    #
 raxr_fit_mode='MI'                                                                                                                                      #
@@ -133,6 +133,7 @@ def make_par_file():
     config = io.Config()
     opt = diffev.DiffEv()
     mod.script=make_script_file()
+    #mod.simulate()
     try:
         mod.simulate()
     except:

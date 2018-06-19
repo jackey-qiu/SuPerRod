@@ -24,12 +24,12 @@ import filehandling as io
 
 ##fill in the plot items here and then exec in the ipython with 'execfile('create_plots_gx_file.py')'#####
 ###################################Plot items handle######################################################
-plot_e_model=True                                                      ##plot electron density profiles?##
-plot_e_FS=True                              ##plot electron density profiles based on Foriour synthesis?##
+plot_e_model=False                                                      ##plot electron density profiles?##
+plot_e_FS=False                              ##plot electron density profiles based on Foriour synthesis?##
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=True                                                                     ##plot RAXR results?##
 plot_AP_Q=False                                                               ##plot Foriour components?##
-gx_file_path='P:\\apps\\SuPerRod\\scripts\\genx_file.gx'                         ##where is your gx file##
+gx_file_path='/Users/cqiu/model_file/scale_RAXR_As_cmp_CS_OS_OS_run2_Jun12combined_ran.gx'                         ##where is your gx file##
 ##########################################################################################################
 
 

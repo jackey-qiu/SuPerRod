@@ -14,7 +14,7 @@ from geometry_modules import *
 from domain_creator_water import domain_creator_water
 from domain_creator_sorbate import domain_creator_sorbate
 from domain_creator_surface import domain_creator_surface
-from best_fit_par_from_genx_to_rod import lib_creator,from_tab_to_par
+#from best_fit_par_from_genx_to_rod import lib_creator,from_tab_to_par
 
 """functions in this class
 create_grid_number, compare_grid, create_match_lib: supporting functions for the bv calculation

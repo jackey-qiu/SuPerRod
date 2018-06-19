@@ -1,0 +1,135 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+A_range	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^A_range=[0,50]                                                                                                                                           #                                                                                                                                  #                                                                                                                                       #$/;"	variable
+E0	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^E0=16300#adsorption energy of resonant element                                                                                                          #$/;"	variable
+F1F2_FILE	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^F1F2_FILE='\\'axd_ThLi_mica_May03_2018.f1f2\\''#name of f1f2 file in the batch_file folder                                                                               #$/;"	variable
+FREEZE	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^FREEZE='True'#True means the resonant element makes no contribution to the total CTR structure factor.                                                  #$/;"	variable
+LOCAL_STRUCTURE_MATCH_LIB	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^LOCAL_STRUCTURE_MATCH_LIB='{\\'trigonal_pyramid\\':[\\'Pb\\'],\\'octahedral\\':[\\'Sb\\',\\'Fe\\',\\'Cd\\',\\'Cu\\',\\'Zn\\'],\\'tetrahedral\\':[\\'As\\',\\'P\\',\\'Cr\\']}'   #$/;"	variable
+NUMBER_GAUSSIAN_PEAK	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^NUMBER_GAUSSIAN_PEAK=6 ##<11                                                                                                                            #$/;"	variable
+NUMBER_GAUSSIAN_PEAK_FREEZE	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^NUMBER_GAUSSIAN_PEAK_FREEZE=6##<11                                                                                                                      #$/;"	variable
+NUMBER_RAXS_SPECTRA	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^NUMBER_RAXS_SPECTRA=12                                                                                                                                  #$/;"	variable
+O_NUMBER	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^O_NUMBER=[[2,2],[4,4],[4,4]]                                                                                                                #$/;"	variable
+Path	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from matplotlib.path import Path$/;"	namespace
+PathPatch	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from matplotlib.patches import PathPatch$/;"	namespace
+RAXR_EL	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^RAXR_EL='\\'Th\\''                                                                                                                                        #$/;"	variable
+RAXR_FIT_MODE	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^RAXR_FIT_MODE='\\'MI\\''                                                                                                                                  #$/;"	variable
+SuPerRod_path	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^SuPerRod_path=['\/','\\\\'][int(os.name=='nt')].join(os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')])[0:os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')]).index('SuPerRod')+1])$/;"	variable
+SuPerRod_path	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^SuPerRod_path=['\/','\\\\'][int(os.name=='nt')].join(os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')])[0:os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')]).index('SuPerRod')+1])$/;"	variable
+SuPerRod_path	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^SuPerRod_path=['\/','\\\\'][int(os.name=='nt')].join(os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')])[0:os.getcwd().rsplit(['\/','\\\\'][int(os.name=='nt')]).index('SuPerRod')+1])$/;"	variable
+_replace_script_section	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^    def _replace_script_section(str_text,key_text,replace_value,replace_loc=1):$/;"	function	function:make_script_file
+_replace_script_section	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^    def _replace_script_section(str_text,key_text,replace_value,replace_loc=1):$/;"	function	function:make_script_file
+a_range	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^a_range=[0,20]                                                                                                                                          #$/;"	variable
+absorption_edge	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^absorption_edge=11873                                                                                                                                   #$/;"	variable
+atom_group_depth_inter_domains	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^atom_group_depth_inter_domains=[[0,10]]                                                                                                          #$/;"	variable
+atom_group_depth_one_domain	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^atom_group_depth_one_domain=10                                                                                                                          #$/;"	variable
+atom_group_scheme_inter_domains	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^atom_group_scheme_inter_domains=[[1,0]]#starting from 0 (0 for Domain1)                                                                           #$/;"	variable
+b_range	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^b_range=[-5,5]                                                                                                                                          #$/;"	variable
+binding_mode	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^binding_mode=[['CS_H'],['OS_H'],['OS_F']]                                                                                  #$/;"	variable
+binding_mode_translation	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def binding_mode_translation(binding_mode,el=sorbate):$/;"	function
+bl_dl_muscovite	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^bl_dl_muscovite={'0_0':{'segment':[[0,20]],'info':[[2,2]]}}$/;"	variable
+bl_dl_muscovite_old	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    '-2_1':{'segment':[[0,4.8609],[4.8609,9]],'info':[[4,-4.8609],[2,-6.8609]]},'-1_-1':{'segment':[[0,9]],'info':[[2,-4.1391]]},'-3_0':{'segment':[[0,1],[1,9]],'info':[[2,-1],[6,-1]]}}$/;"	variable
+bv_waiver	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^bv_waiver=[]                                                                                                                                            #$/;"	variable
+c_lattice	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^c_lattice=20.1328                                                                                                                                     #$/;"	variable
+c_range	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^c_range=[0,10]                                                                                                                                          #$/;"	variable
+config	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    config = io.Config()$/;"	variable
+copy	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import os,inspect,copy,sys$/;"	namespace
+copy	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import os,inspect,copy,sys$/;"	namespace
+copy	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import os,inspect,copy,sys$/;"	namespace
+curve_fit	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from scipy.optimize import curve_fit$/;"	namespace
+data_loader	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data_loader plugin                                                          #$/;"	variable
+data_loader	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data_loader plugin                                                          #$/;"	variable
+diffev	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import parameters,diffev,model$/;"	namespace
+diffev	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import parameters,diffev,model$/;"	namespace
+diffev	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import parameters,diffev,model$/;"	namespace
+domain_setup_FLT	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^domain_setup_FLT=[0]#0 for short FLT, 1 for long FLT                                                                                              #$/;"	variable
+domain_setup_HLT	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^domain_setup_HLT=[3,3]#2 for short HLT, 3 for long HLT                                                                                                    #$/;"	variable
+dump_path_locator	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def dump_path_locator(func=local_func):$/;"	function
+dump_path_locator	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def dump_path_locator(func=local_func):$/;"	function
+f1f2_file_name	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^f1f2_file_name='As_K_edge_March28_2018.f1f2'                                                                                                                         #$/;"	variable
+find_A_P_muscovite	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def find_A_P_muscovite(q_list,ctrs,amps,wids,wt=0.25):$/;"	function
+find_nth_overlapping	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def find_nth_overlapping(haystack, needle, n):$/;"	function
+find_nth_overlapping	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def find_nth_overlapping(haystack, needle, n):$/;"	function
+fit_e_density	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def fit_e_density(path=module_path_locator(),fit_range=[1,40],zs=None,N=8):$/;"	function
+fourier_synthesis	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def fourier_synthesis(q_list,P,A,z,N=40,Auc=46.9275):$/;"	function
+func	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    def func(params,*args):$/;"	function	function:gaussian_fit_DE
+func	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    def func(x_ctrs,*params):$/;"	function	function:gaussian_fit
+func	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    def func(x_ctrs_qs,*params):$/;"	function	function:fit_e_density
+func_DE	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    def func_DE(params,*args):$/;"	function	function:gaussian_fit_DE
+gaussian_fit	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def gaussian_fit(data,fit_range=[1,40],zs=None,N=8,water_scaling=1):$/;"	function
+gaussian_fit_DE	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def gaussian_fit_DE(data,fit_range=[1,40],zs=None,N=8,water_scaling=1):$/;"	function
+glob	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import pickle,glob$/;"	namespace
+gx_file_name	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^gx_file_name='As_cmp_CS_OS_CS_OS_run1_Jun12.gx'                                                                                                                             #                                                                                                                                         #$/;"	variable
+gx_file_name	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^gx_file_name='P:\\\\temp_model\\\\CTR_Th_mica_LiCl_100mM_superrod_run9_May31.gx'                                                                                                                             #                                                                                                                                        #$/;"	variable
+gx_file_path	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^gx_file_path='\/Users\/cqiu\/model_file\/scale_RAXR_As_cmp_CS_OS_OS_run2_Jun12combined_ran.gx'                         ##where is your gx file##$/;"	variable
+inspect	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import os,inspect,copy,sys$/;"	namespace
+inspect	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import sys,os,inspect$/;"	namespace
+inspect	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import os,inspect,copy,sys$/;"	namespace
+inspect	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import os,inspect,copy,sys$/;"	namespace
+io	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import filehandling as io$/;"	namespace
+io	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import filehandling as io$/;"	namespace
+io	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import filehandling as io$/;"	namespace
+local_func	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def local_func():$/;"	function
+local_func	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def local_func():$/;"	function
+local_func	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def local_func():$/;"	function
+make_data_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def make_data_file():$/;"	function
+make_data_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def make_data_file():$/;"	function
+make_gx_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def make_gx_file():$/;"	function
+make_gx_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def make_gx_file():$/;"	function
+make_par_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def make_par_file():$/;"	function
+make_par_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def make_par_file():$/;"	function
+make_script_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def make_script_file(path_locator=script_path_locator):$/;"	function
+make_script_file	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def make_script_file(path_locator=script_path_locator):$/;"	function
+matplotlib	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import matplotlib.pyplot as plt$/;"	namespace
+mod	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    mod = model.Model()$/;"	variable
+model	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import parameters,diffev,model$/;"	namespace
+model	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import parameters,diffev,model$/;"	namespace
+model	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import parameters,diffev,model$/;"	namespace
+module_path_locator	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def module_path_locator(func=local_func):$/;"	function
+mpt	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import matplotlib as mpt$/;"	namespace
+np	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import numpy as np$/;"	namespace
+np	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import numpy as np$/;"	namespace
+np	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import numpy as np$/;"	namespace
+num	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import numpy as num$/;"	namespace
+num_raxr_datasets	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^num_raxr_datasets=9                                                                                                                                    #$/;"	variable
+opt	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^    opt = diffev.DiffEv()$/;"	variable
+os	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import os,inspect,copy,sys$/;"	namespace
+os	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import sys,os,inspect$/;"	namespace
+os	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import os,inspect,copy,sys$/;"	namespace
+os	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import os,inspect,copy,sys$/;"	namespace
+parameters	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import parameters,diffev,model$/;"	namespace
+parameters	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import parameters,diffev,model$/;"	namespace
+parameters	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import parameters,diffev,model$/;"	namespace
+path_of_data	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^path_of_data='\/Users\/cqiu\/app\/SuPerRod\/dump_files\/temp_full_dataset.dat'                                                               #$/;"	variable
+path_of_data	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^path_of_data='P:\\\\My stuff\\\\Manuscripts\\\\Th mica -moritz\\\\Th_3mM_LiCl_data\\\\CTR_RAXR_Th_LiCl_3mM_191217a_GenX_formate.dat'                                                                         #$/;"	variable
+pickle	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import pickle,glob$/;"	namespace
+plot_AP_Q	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^plot_AP_Q=False                                                               ##plot Foriour components?##$/;"	variable
+plot_all	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def plot_all(path=module_path_locator(),make_offset_of_total_e=False,fit_e_profile=0,plot_e_model=1,plot_e_FS=1,plot_ctr=1,plot_raxr=0,plot_AP_Q=0):$/;"	function
+plot_ctr	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^plot_ctr=True                                                                        ##plot CTR results?##$/;"	variable
+plot_e_FS	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^plot_e_FS=False                              ##plot electron density profiles based on Foriour synthesis?##$/;"	variable
+plot_e_model	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^plot_e_model=False                                                      ##plot electron density profiles?##$/;"	variable
+plot_raxr	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^plot_raxr=True                                                                     ##plot RAXR results?##$/;"	variable
+plotting_many_modelB	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def plotting_many_modelB(save_file='D:\/\/pic.png',head='P:\\\\My stuff\\\\Manuscripts\\\\hematite rcut\\\\pb on cmp rcut v10\\dump_files\\\\',object_files=['temp_plot_O1O3_O5O7','temp_plot_O1O3_O5O8','temp_plot_O1O4_O5O7','temp_plot_O1O4_O5O8'],index=[3,3],color=['blue','#e41a1c','#4daf4a','#984ea3','#ff7f00'],lw=1.5,l_dashes=[(None,None),(None,None),(None,None),(None,None),(None,None),(None,None)],label=['Experimental data','Model1 results','Model2 results','Model3','Model4','Model5','Model6'],marker=['p'],title=['0 0 L','0 2 L','1 0 L','1 1 L','2 0 L','2 2 L','3 0 L','2 -1 L','2 1 L'],legend=[False,False,False,False,False,False,False,False,False],fontsize=10):$/;"	function
+plotting_modelB	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def plotting_modelB(object=[],fig=None,index=[2,3,1],color=['0.35','r','c','m','k'],l_dashes=[()],lw=3,label=['Experimental data','Model fit'],title=['10L'],marker=['o'],legend=True,fontsize=10):$/;"	function
+plotting_raxr_new	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def plotting_raxr_new(data,savefile="D:\/\/raxr_temp.png",color=['b','r'],marker=['o']):$/;"	function
+plt	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import matplotlib.pyplot as plt$/;"	namespace
+pyplot	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from matplotlib import pyplot$/;"	namespace
+q_list_func	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def q_list_func(h, k, l,a=5.1988, b=9.0266, c=20.1058, alpha=90,beta=95.782,gamma=90):$/;"	function
+raxr_fit_mode	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^raxr_fit_mode='MI'                                                                                                                                      #$/;"	variable
+rc	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from matplotlib import rc$/;"	namespace
+replace_script_section	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^def replace_script_section(str_text,key_text,replace_value,replace_loc=1):$/;"	function
+script_path_locator	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^def script_path_locator(func=local_func):$/;"	function
+script_path_locator	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^def script_path_locator(func=local_func):$/;"	function
+set_color	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^from color_mate import color_combine_mate as set_color$/;"	namespace
+sorbate	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^sorbate='As'                                                                                                                                            #$/;"	variable
+sys	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import os,inspect,copy,sys$/;"	namespace
+sys	/Users/cqiu/app/SuPerRod/accessory_functions/plotting_results/create_plots_gx_file.py	/^import sys,os,inspect$/;"	namespace
+sys	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^import os,inspect,copy,sys$/;"	namespace
+sys	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^import os,inspect,copy,sys$/;"	namespace
+use_bv	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^use_bv=0                                                                                                                                                #$/;"	variable
+wal	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_muscovite.py	/^wal=0.82657#wave length of x-ray                                                                                                                        #$/;"	variable
+water_layer_number	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^water_layer_number=[0,2,2]                                                                                                                          #$/;"	variable
+x_ray_wal	/Users/cqiu/app/SuPerRod/scripts/build_gx_file_hematite.py	/^x_ray_wal=0.8625                                                                                                                                       #$/;"	variable

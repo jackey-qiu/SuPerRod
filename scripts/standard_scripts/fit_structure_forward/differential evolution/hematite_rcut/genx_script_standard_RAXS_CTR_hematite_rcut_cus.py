@@ -1,5 +1,5 @@
 import models.sxrd_new1 as model
-import models.raxs as model2
+#import models.raxs as model2
 from models.utils import UserVars
 from datetime import datetime
 import numpy as np
@@ -40,10 +40,10 @@ if COUNT_TIME:t_0=datetime.now()
 running_mode=0#if 0 will print model plotting files
 USE_BV=0#do you want to use bv contraints
 debug_bv=False
-pickup_index=[[0], [6], [15], [21]]#using matching index table above
-SORBATE=[['As'], ['As'], ['As'], ['As']]#same shape as pickup_index
+pickup_index=[[0], [6], [21]]#using matching index table above
+SORBATE=[['As'], ['As'], ['As']]#same shape as pickup_index
 half_layer=[3, 3]#2 for short slab and 3 for long slab
-full_layer=[0, 0]#0 for short slab and 1 for long slab
+full_layer=[0]#0 for short slab and 1 for long slab
 MIRROR=[[False for each_item in each] for each in pickup_index]
 #change the O number according to coordination structure and binding mode
 O_NUMBER_HL=[[4,4],[0,0],[1,1],[0,0],[3,3],[0,0],[3,3],[0,0]]
@@ -52,7 +52,7 @@ O_NUMBER_FL=[[2,2],[0,0],[0,0],[0,0],[0,0],[0,0],[4,4],[0,0]]
 O_NUMBER_FL_EXTRA=[[0,0],[0,0],[0,0],[2,2],[0,0],[0,0],[4,4]]
 
 #water layer and layer sorbate setup here#
-WATER_LAYER_NUM=[0, 0, 0, 0]
+WATER_LAYER_NUM=[0, 2, 2]
 ref_height_adsorb_water_map={0:[['O1_5_0','O1_6_0']],1:[['O1_11_t','O1_12_t']],2:[['O1_7_0','O1_8_0']],3:[['O1_1_0','O1_2_0']]}
 WATER_LAYER_REF=map(lambda key,n:ref_height_adsorb_water_map[key]*(n/2),half_layer+full_layer,WATER_LAYER_NUM)
 water_pars={'use_default':False,'number':WATER_LAYER_NUM,'ref_point':WATER_LAYER_REF}
@@ -71,8 +71,8 @@ F1F2_FILE='As_K_edge_March28_2018.f1f2'
 F1F2=None
 
 #setup grouping scheme
-GROUPING_SCHEMES=[[1, 0], [3, 2]]#domain tag of first domain is 1 (Domain2=Domain1)
-GROUPING_DEPTH=[[0, 10], [0, 10]]#means I will group top 10 (range(0,10)) layers of domain2 to those of domain1
+GROUPING_SCHEMES=[[1, 0]]#domain tag of first domain is 1 (Domain2=Domain1)
+GROUPING_DEPTH=[[0, 10]]#means I will group top 10 (range(0,10)) layers of domain2 to those of domain1
 
 #setting slabs##
 wal=0.8625#wavelength of x ray
@@ -133,7 +133,7 @@ SORBATE_NUMBER_FL_EXTRA=[[2],[2],[2],[2],[2],[2],[2]]
 #grouping commands to be executed in SIM function#
 commands_surface=domain_creator.generate_commands_for_surface_atom_grouping_new(np.array(GROUPING_SCHEMES),domain_creator.translate_domain_type(GROUPING_SCHEMES,half_layer+full_layer),GROUPING_DEPTH)
 #you can add more commads in this list here(like 'command1','command2')#
-commands_other=['gp_HO_set2_D1.setu(gp_HO_set1_D1.getu())', 'gp_sorbates_set2_D1.setoc(gp_sorbates_set1_D1.getoc())', 'gp_HO_set2_D2.setu(gp_HO_set1_D2.getu())', 'gp_sorbates_set2_D2.setoc(gp_sorbates_set1_D2.getoc())', 'gp_HO_set2_D3.setu(gp_HO_set1_D3.getu())', 'gp_sorbates_set2_D3.setoc(gp_sorbates_set1_D3.getoc())', 'gp_HO_set2_D4.setu(gp_HO_set1_D4.getu())', 'gp_sorbates_set2_D4.setoc(gp_sorbates_set1_D4.getoc())']
+commands_other=['gp_HO_set2_D1.setu(gp_HO_set1_D1.getu())', 'gp_sorbates_set2_D1.setoc(gp_sorbates_set1_D1.getoc())', 'gp_HO_set2_D2.setu(gp_HO_set1_D2.getu())', 'gp_sorbates_set2_D2.setoc(gp_sorbates_set1_D2.getoc())', 'gp_HO_set2_D3.setu(gp_HO_set1_D3.getu())', 'gp_sorbates_set2_D3.setoc(gp_sorbates_set1_D3.getoc())']
 commands=commands_other+commands_surface
 ##############################################end of main setup zone############################################
 #                                                                                                              #
@@ -171,7 +171,7 @@ DOMAIN=domain_creator.pick([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,
 DOMAIN_NUMBER=len(DOMAIN)
 
 SORBATE_NUMBER=domain_creator.pick_act(SORBATE_NUMBER_HL+SORBATE_NUMBER_HL_EXTRA+SORBATE_NUMBER_FL+SORBATE_NUMBER_FL_EXTRA,pickup_index)
-O_NUMBER=[[2, 2], [4, 4], [2, 2], [4, 4]]
+O_NUMBER=[[2, 2], [4, 4], [4, 4]]
 SORBATE_LIST=domain_creator.create_sorbate_el_list2(SORBATE,SORBATE_NUMBER)
 #give a unique id to each domain atom#
 names,vars_container=setup_domain_hematite_rcut.setup_atm_ids(DOMAIN_NUMBER,DOMAIN,SORBATE,SORBATE_NUMBER,SORBATE_LIST,WATER_NUMBER,O_NUMBER,half_layer_pick,full_layer_pick)
