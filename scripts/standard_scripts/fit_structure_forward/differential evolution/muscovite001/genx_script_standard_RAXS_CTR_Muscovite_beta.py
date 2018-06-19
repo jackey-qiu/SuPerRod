@@ -7,9 +7,9 @@ from models.utils import UserVars
 import batchfile.locate_path as batch_path
 import dump_files.locate_path as output_path
 import models.domain_creator as domain_creator
-import supportive_functions.create_plots as create_plots
+import accessory_functions.plotting_results.create_plots as create_plots
 import models.domain_creator_sorbate as domain_creator_sorbate
-import supportive_functions.make_parameter_table_GenX_5_beta as make_grid
+import accessory_functions.make_par_table.make_parameter_table_GenX_5_beta as make_grid
 import convert_files
 
 ##==========================================<program begins from here>=========================================##
@@ -18,10 +18,17 @@ if COUNT_TIME:t_0=datetime.now()
 VERSION=1.2#version number to make easier code update to compatible with gx files based on old version scripts
 
 ##<global handles>##
-RUN=1
+running_mode=0
+RUN=running_mode
 BATCH_PATH_HEAD,OUTPUT_FILE_PATH=batch_path.module_path_locator(),output_path.module_path_locator()
-F1F2=np.loadtxt(os.path.join(BATCH_PATH_HEAD,'Zr_K_edge.f1f2'))#the energy column should NOT have duplicate values after rounding up to 0 digit. If so, cut off rows of duplicate energy!
-RAXR_EL,E0,NUMBER_RAXS_SPECTRA,RAXR_FIT_MODE,FREEZE='Zr',18007,21,'MI',True#FREEZE=True will have resonant el make no influence on the non-resonant structure factor. And it will otherwise.
+F1F2_FILE='Zr_K_edge.f1f2'
+F1F2=np.loadtxt(os.path.join(BATCH_PATH_HEAD,F1F2_FILE))#the energy column should NOT have duplicate values after rounding up to 0 digit. If so, cut off rows of duplicate energy!
+RAXR_EL='Zr'#resonant element
+E0=18007#Adsorption edge energy
+NUMBER_RAXS_SPECTRA=21#total number of RAXR spectra
+RAXR_FIT_MODE='MI'#'MI' for model-independent, and 'MD' for model-dependent
+ELECTRON_DENSITY_CONSTRAINT=False
+FREEZE=True#FREEZE=True will have resonant el make no influence on the non-resonant structure factor. And it will otherwise.
 NUMBER_DOMAIN,COHERENCE=2,True
 HEIGHT_OFFSET=-2.6685#if set to 0, the top atomic layer is at 2.6685 in fractional unit before relaxation (should not be changed)
 XY_OFFSET=[0,0]#takes effect only for structural atoms (not include Gaussian atoms)
@@ -29,7 +36,8 @@ GROUP_SCHEME=[[1,0]]#means group Domain1 and Domain2 for inplane and out of plan
 
 ##<setting slabs>##
 wal=0.7749136#wavelength,set this number right each time (read it from nQc data file)
-unitcell = model.UnitCell(5.1988, 9.0266, 20.04156, 90, 95.782, 90)#a,b,c,alpha,beta,gamma, correct c each time (use q-corrected c),c=c_projected/sin(180-beta)
+c_lattice=20.04156#correct c each time (use q-corrected c),c_lattice=c_projected/sin(180-beta)
+unitcell = model.UnitCell(5.1988, 9.0266, c_lattice, 90, 95.782, 90)#a,b,c,alpha,beta,gamma, 
 inst = model.Instrument(wavel = wal, alpha = 2.0)
 bulk, Domain1, Domain2 = model.Slab(T_factor='u'), model.Slab(c = 1.0,T_factor='u'), model.Slab(c = 1.0,T_factor='u')
 domain_creator.add_atom_in_slab(bulk,os.path.join(BATCH_PATH_HEAD,'muscovite_001_bulk_u_corrected_new.str'),height_offset=HEIGHT_OFFSET)
@@ -78,7 +86,9 @@ for i in range(NUMBER_SORBATE_LAYER):
     Domain1,vars()['rgh_domain1_set'+str(i+1)]=domain_creator.add_sorbate_new(domain=Domain1,anchored_atoms=[],func=domain_creator_sorbate.OS_cubic_oligomer,geo_lib=geo_lib_domain1,info_lib=INFO_LIB,domain_tag='_D1',rgh=vars()['rgh_domain1_set'+str(i+1)],index_offset=[i*2*NUMBER_EL_MOTIF,NUMBER_EL_MOTIF+i*2*NUMBER_EL_MOTIF],xy_offset=XY_OFFSET,height_offset=HEIGHT_OFFSET,symmetry_couple=SYMMETRY,level=LEVEL,cap=CAP,attach_sorbate_number=EXTRA_SORBATE,first_or_second=SWITCH_EXTRA_SORBATE,mirror=MIRROR_EXTRA_SORBATE,build_grid=BUILD_GRID)
 
 ##<Adding Gaussian peaks>##
-NUMBER_GAUSSIAN_PEAK, EL_GAUSSIAN_PEAK, FIRST_PEAK_HEIGHT=6,['O','O','O','O','O','O'],1
+NUMBER_GAUSSIAN_PEAK=6#how many gaussian peaks would you like to add?
+EL_GAUSSIAN_PEAK=['O']*NUMBER_GAUSSIAN_PEAK#the element of each gaussian peak
+FIRST_PEAK_HEIGHT=1
 GAUSSIAN_OCC_INIT, GAUSSIAN_LAYER_SPACING, GAUSSIAN_U_INIT=1,2,0.1
 GAUSSIAN_SHAPE, GAUSSIAN_RMS='Flat',2
 Domain1, Gaussian_groups,Gaussian_group_names=domain_creator.add_gaussian(domain=Domain1,el=EL_GAUSSIAN_PEAK,number=NUMBER_GAUSSIAN_PEAK,first_peak_height=FIRST_PEAK_HEIGHT,spacing=GAUSSIAN_LAYER_SPACING,u_init=GAUSSIAN_U_INIT,occ_init=GAUSSIAN_OCC_INIT,height_offset=HEIGHT_OFFSET,c=unitcell.c,domain_tag='_D1',shape=GAUSSIAN_SHAPE,gaussian_rms=GAUSSIAN_RMS)
@@ -96,22 +106,33 @@ el_freezed=RAXR_EL
 Domain1=domain_creator.add_freezed_els(domain=Domain1,el=el_freezed,u=U_RAXS_LIST,oc=OC_RAXS_LIST,x=X_RAXS_LIST,y=Y_RAXS_LIST,z=Z_RAXS_LIST)
 
 ##<Freeze Elements using adding_gaussian function>##
-NUMBER_GAUSSIAN_PEAK_FREEZE, EL_GAUSSIAN_PEAK_FREEZE, FIRST_PEAK_HEIGHT_FREEZE=6,RAXR_EL,5
+NUMBER_GAUSSIAN_PEAK_FREEZE=6#number of resonant element peaks
+EL_GAUSSIAN_PEAK_FREEZE=RAXR_EL 
+FIRST_PEAK_HEIGHT_FREEZE=5
 GAUSSIAN_OCC_INIT_FREEZE, GAUSSIAN_LAYER_SPACING_FREEZE, GAUSSIAN_U_INIT_FREEZE=1,2,0.1
 GAUSSIAN_SHAPE_FREEZE, GAUSSIAN_RMS_FREEZE='Flat',2
 Domain1, Gaussian_groups_freeze,Gaussian_group_names_freeze=domain_creator.add_gaussian(domain=Domain1,el=EL_GAUSSIAN_PEAK_FREEZE,number=NUMBER_GAUSSIAN_PEAK_FREEZE,first_peak_height=FIRST_PEAK_HEIGHT_FREEZE,spacing=GAUSSIAN_LAYER_SPACING_FREEZE,u_init=GAUSSIAN_U_INIT_FREEZE,occ_init=GAUSSIAN_OCC_INIT_FREEZE,height_offset=HEIGHT_OFFSET,c=unitcell.c,domain_tag='_D1',shape=GAUSSIAN_SHAPE_FREEZE,gaussian_rms=GAUSSIAN_RMS_FREEZE,freeze_tag=True)
 for i in range(len(Gaussian_groups_freeze)):vars()[Gaussian_group_names_freeze[i]]=Gaussian_groups_freeze[i]
-rgh_gaussian_freeze=domain_creator.define_gaussian_vars(rgh=UserVars(),domain=Domain1,shape=GAUSSIAN_SHAPE_FREEZE)
+rgh_gaussian_freeze=domain_creator.define_gaussian_vars(rgh=UserVars(),domain=Domain1,shape=GAUSSIAN_SHAPE_FREEZE,freeze_tag=True)
+
+##<Setting electron density constraint>##
+predefined_e_density=domain_creator.extract_e_density_info_muscovite(file=os.path.join(OUTPUT_FILE_PATH,'temp_plot_eden'))
 
 ##<Define atom groups>##
 #surface atoms
 #old stuff (to be deleted)
-group_number=1##to be set##(number of groups to be considered for model fit)
+group_number=0##to be set##(number of groups to be considered for model fit)
 groups,group_names,atom_group_info=domain_creator.setup_atom_group_muscovite(domain=[Domain1,Domain2],group_number=group_number)
 for i in range(len(groups)):vars()[group_names[i]]=groups[i]
 #group atom layers using methosd from Sang Soo Lee Matlab script
 names,layer_groups=domain_creator.setup_atom_group_muscovite_2(domain=[Domain1,Domain2])
+names_tab,layer_groups_tab=[],[]
 for i in range(len(layer_groups)):vars()[names[i]]=layer_groups[i]
+#set the fit layers
+for i in range(len(layer_groups)):
+    if names[i] in ['gp_Otop_layer_1','gp_Octt_layer_1','gp_Octa_layer_1','gp_Obas_layer_1','gp_K_layer_1']+['gp_Otop_layer_2','gp_Octt_layer_2','gp_Octa_layer_2','gp_Obas_layer_2','gp_K_layer_2']+['gp_Otop_layer_3','gp_Octt_layer_3','gp_Octa_layer_3','gp_Obas_layer_3','gp_K_layer_3']:
+        names_tab.append(names[i])
+        layer_groups_tab.append(layer_groups[i])
 
 #sorbate_atoms
 sorbate_id_list_domain1,sorbate_group_names_domain1=domain_creator.generate_sorbate_ids(Domain1,NUMBER_SORBATE_LAYER,INFO_LIB['sorbate_el'],NUMBER_EL_MOTIF,symmetry=SYMMETRY,level=CAP)
@@ -128,11 +149,29 @@ rgh_dls=domain_creator.define_diffused_layer_sorbate_vars(rgh=UserVars())#Diffus
 ##<make fit table file>##
 if not RUN:
     table_container=[]
-    rgh_instance_list=[rgh]+groups+sorbate_groups+Gaussian_groups+[rgh_gaussian]+[rgh_gaussian_freeze]+[vars()['rgh_domain1_set'+str(i+1)] for i in range(NUMBER_SORBATE_LAYER)]+[rgh_dlw,rgh_dls]
-    rgh_instance_name_list=['rgh']+group_names+sorbate_group_names+Gaussian_group_names+['rgh_gaussian']+['rgh_gaussian_freeze']+['rgh_domain1_set'+str(i+1) for i in range(NUMBER_SORBATE_LAYER)]+['rgh_dlw','rgh_dls']
+    #global vars
+    rgh_instance_list=[rgh]
+    rgh_instance_name_list=['rgh']
+    #surface relaxation
     table_container=make_grid.set_table_input_all(container=table_container,rgh_instance_list=rgh_instance_list,rgh_instance_name_list=rgh_instance_name_list,par_file=os.path.join(BATCH_PATH_HEAD,'pars_ranges.txt'))
+    rgh_instance_list=layer_groups_tab
+    rgh_instance_name_list=names_tab
+    table_container=make_grid.set_table_input_all(container=table_container,rgh_instance_list=rgh_instance_list,rgh_instance_name_list=rgh_instance_name_list,par_file=os.path.join(BATCH_PATH_HEAD,'pars_ranges_surface_relaxation.txt'),sep=False)
+    #interfacal structure
+    rgh_instance_list=groups+sorbate_groups+Gaussian_groups+[rgh_gaussian]+[rgh_gaussian_freeze]
+    rgh_instance_name_list=group_names+sorbate_group_names+Gaussian_group_names+['rgh_gaussian']+['rgh_gaussian_freeze']
+    table_container=make_grid.set_table_input_all(container=table_container,rgh_instance_list=rgh_instance_list,rgh_instance_name_list=rgh_instance_name_list,par_file=os.path.join(BATCH_PATH_HEAD,'pars_ranges.txt'))
+    table_container=make_grid.set_table_from_a_list(container=table_container,head='Domain1.setFreezed_el_',el=RAXR_EL,num_el=NUMBER_GAUSSIAN_PEAK_FREEZE,oc_range=[0,50],u_range=[0.5,50])
+    rgh_instance_list=[vars()['rgh_domain1_set'+str(i+1)] for i in range(NUMBER_SORBATE_LAYER)]+[rgh_dlw,rgh_dls]
+    rgh_instance_name_list=['rgh_domain1_set'+str(i+1) for i in range(NUMBER_SORBATE_LAYER)]+['rgh_dlw','rgh_dls']
+    table_container=make_grid.set_table_input_all(container=table_container,rgh_instance_list=rgh_instance_list,rgh_instance_name_list=rgh_instance_name_list,par_file=os.path.join(BATCH_PATH_HEAD,'pars_ranges.txt'))
+
     #raxs pars
-    table_container=make_grid.set_table_input_raxs(container=table_container,rgh_group_instance=rgh_raxs,rgh_group_instance_name='rgh_raxs',par_range={'a':[0,20],'b':[-5,5],'c':[0,10],'A':[0,10],'P':[0,1]},number_spectra=NUMBER_RAXS_SPECTRA,number_domain=1)
+    a_range_raxr=[0,20]
+    b_range_raxr=[-5,5]
+    c_range_raxr=[0,10]
+    A_range_raxr=[0,10]    
+    table_container=make_grid.set_table_input_raxs(container=table_container,rgh_group_instance=rgh_raxs,rgh_group_instance_name='rgh_raxs',par_range={'a':a_range_raxr,'b':b_range_raxr,'c':c_range_raxr,'A':A_range_raxr,'P':[0,1]},number_spectra=NUMBER_RAXS_SPECTRA,number_domain=1)
     #build up the tab file
     make_grid.make_table(container=table_container,file_path=os.path.join(OUTPUT_FILE_PATH,'par_table.tab'))
 
@@ -212,7 +251,7 @@ def Sim(data,VARS=VARS):
             domain_creator.make_dummy_data(file=os.path.join(OUTPUT_FILE_PATH,'temp_dummy_data.dat'),data=data,I=F)
         if combine_data_sets:
             domain_creator.combine_all_datasets(file=os.path.join(OUTPUT_FILE_PATH,'temp_full_dataset.dat'),data=data)
-        atm_number={'Zr':40}
+        atm_number={'Zr':40,'Th':90}
         convert_files.convert_best_pars_to_matlab_input_file(file_name=os.path.join(OUTPUT_FILE_PATH,'temp_matlab_param.dat'),domain=Domain1,layered_water=rgh_dlw,c=unitcell.c,rgh=rgh,scale=inst.get_inten(),vars=VARS,freeze=FREEZE,z_raxr=atm_number[RAXR_EL])
     if COUNT_TIME:
         t_3=datetime.now()

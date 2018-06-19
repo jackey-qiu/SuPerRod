@@ -1,5 +1,8 @@
 import models.sxrd_new1 as model
+<<<<<<< HEAD
 #import models.raxs as model2
+=======
+>>>>>>> 23dca1bf07e5598b2c9a615f60e2fd7ae69c68a2
 from models.utils import UserVars
 from datetime import datetime
 import numpy as np
