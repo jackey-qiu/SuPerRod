@@ -306,6 +306,8 @@ def define_diffused_layer_sorbate_vars(rgh):
     rgh.new_var('oc_damping_factor',1.0)#high value the occupancy damping quickly
     return rgh
 
+def extract_e_density_info_muscovite(file=''):
+    pass
 def setup_atom_group_muscovite(domain=[],group_number=5):
     ref_id_list_Al=[['O4_3_0','O4_4_0'],['O3_3_0','O3_4_0'],['O5_3_0','O5_4_0'],['Al1_3_0','Al1_4_0'],['Al2_3_0','Al2_4_0'],['O1_3_0','O1_4_0'],['O2_3_0','O2_4_0'],['O6_3_0','O6_4_0'],\
                  ['Al3_3_0','Al3_4_0'],['Al3_5_0','Al3_6_0'],['O6_5_0','O6_6_0'],['O2_5_0','O2_6_0'],['O1_5_0','O1_6_0'],['Al2_5_0','Al2_6_0'],['Al1_5_0','Al1_6_0'],['O5_5_0','O5_6_0'],['O4_5_0','O4_6_0'],['O3_5_0','O3_6_0']]

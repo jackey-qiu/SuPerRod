@@ -21,17 +21,15 @@ sys.path.append(['/','\\'][int(os.name=='nt')].join([SuPerRod_path,'plugins','da
 import parameters,diffev,model
 import filehandling as io
 
-
 ##fill in the plot items here and then exec in the ipython with 'execfile('create_plots_gx_file.py')'#####
 ###################################Plot items handle######################################################
 plot_e_model=True                                                      ##plot electron density profiles?##
 plot_e_FS=True                              ##plot electron density profiles based on Foriour synthesis?##
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=True                                                                     ##plot RAXR results?##
-plot_AP_Q=False                                                               ##plot Foriour components?##
-gx_file_path='P:\\apps\\SuPerRod\\scripts\\genx_file.gx'                         ##where is your gx file##
+plot_AP_Q=False                                                              ##plot Foriour components?##
+gx_file_path='P:\\temp_model\\scale_RAXR_As_cmp_CS_OS_OS_run2_Jun12combined_ran.gx'                         ##where is your gx file##
 ##########################################################################################################
-
 
 def local_func():
     return None
@@ -620,6 +618,14 @@ def plotting_raxr_new(data,savefile="D://raxr_temp.png",color=['b','r'],marker=[
     #fig.tight_layout()
     fig.savefig(savefile,dpi=300)
     return fig
+
+def find_nth_overlapping(haystack, needle, n):
+    start = haystack.find(needle)
+    while start >= 0 and n > 1:
+        start = haystack.find(needle, start+1)
+        n -= 1
+    return start
+
 def replace_script_section(str_text,key_text,replace_value,replace_loc=1):
     #loc=str_text.find(key_text,replace_loc-1)
     loc=find_nth_overlapping(str_text,key_text,replace_loc)
@@ -648,6 +654,8 @@ if __name__=="__main__":
     opt = diffev.DiffEv()
     io.load_gx(gx_file_path,mod,opt,config)
     mod.script=replace_script_section(mod.script,'running_mode','0')
+    for i in range(len(mod.data.items)):
+        mod.data.items[i].use=True
     print('Simulate and dump files now!')
     mod.simulate()
     print('Plot files are dumpt to pocket!')

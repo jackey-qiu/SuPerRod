@@ -10,7 +10,7 @@ import filehandling as io
 import numpy as np
 
 ##################################################################Tune the file here only################################################################
-gx_file_name='P:\\temp_model\\CTR_Th_mica_LiCl_100mM_superrod_run9_May31.gx'                                                                                                                             #                                                                                                                                        #
+gx_file_name='P:\\temp_model\\CTR_Th_mica_LiCl_100mM_superrod_run1_Jun04.gx'                                                                                                                             #                                                                                                                                        #
                                                                                                                                                         #
 path_of_data='P:\\My stuff\\Manuscripts\\Th mica -moritz\\Th_3mM_LiCl_data\\CTR_RAXR_Th_LiCl_3mM_191217a_GenX_formate.dat'                                                                         #
 data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data_loader plugin                                                          #
@@ -18,12 +18,12 @@ data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data
 RAXR_EL='\'Th\''                                                                                                                                        #
 wal=0.82657#wave length of x-ray                                                                                                                        #
 E0=16300#adsorption energy of resonant element                                                                                                          #
-F1F2_FILE='\'axd_ThLi_mica_May03_2018.f1f2\''#name of f1f2 file in the batch_file folder                                                                               #
+F1F2_FILE='\'axd_ThLi_mica_Jun02_2018.f1f2\''#name of f1f2 file in the batch_file folder                                                                               #
                                                                                                                                                         #
 c_lattice=20.1328                                                                                                                                     #
 NUMBER_RAXS_SPECTRA=12                                                                                                                                  #
-NUMBER_GAUSSIAN_PEAK=6 ##<11                                                                                                                            #
-NUMBER_GAUSSIAN_PEAK_FREEZE=6##<11                                                                                                                      #
+NUMBER_GAUSSIAN_PEAK=4 ##<11                                                                                                                            #
+NUMBER_GAUSSIAN_PEAK_FREEZE=4##<11                                                                                                                      #
                                                                                                                                                         #
 RAXR_FIT_MODE='\'MI\''                                                                                                                                  #
 FREEZE='True'#True means the resonant element makes no contribution to the total CTR structure factor.                                                  #

@@ -77,7 +77,7 @@ if mpi_tag:
 else:
     spec_path='M:\\fwog\\members\\qiu05\\March_21_2018_APS\\schmidt\\hem'
     spec_name='hem_pol_sng_2_1.spec'
-    scan_number=[]#[]#[55]+range(35,50)#+range(35,50)+[55]
+    scan_number=range(124,160)#[]#[55]+range(35,50)#+range(35,50)+[55]
     substrate='hematite'
     size=1
     rank=0

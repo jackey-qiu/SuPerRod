@@ -21,7 +21,7 @@ VERSION=1.2#version number to make easier code update to compatible with gx file
 running_mode=0
 RUN=running_mode
 BATCH_PATH_HEAD,OUTPUT_FILE_PATH=batch_path.module_path_locator(),output_path.module_path_locator()
-F1F2_FILE='axd_ThLi_mica_May03_2018.f1f2'
+F1F2_FILE='axd_ThLi_mica_Jun02_2018.f1f2'
 F1F2=np.loadtxt(os.path.join(BATCH_PATH_HEAD,F1F2_FILE))#the energy column should NOT have duplicate values after rounding up to 0 digit. If so, cut off rows of duplicate energy!
 RAXR_EL='Th'#resonant element
 E0=16300#Adsorption edge energy
@@ -85,7 +85,7 @@ for i in range(NUMBER_SORBATE_LAYER):
     Domain1,vars()['rgh_domain1_set'+str(i+1)]=domain_creator.add_sorbate_new(domain=Domain1,anchored_atoms=[],func=domain_creator_sorbate.OS_cubic_oligomer,geo_lib=geo_lib_domain1,info_lib=INFO_LIB,domain_tag='_D1',rgh=vars()['rgh_domain1_set'+str(i+1)],index_offset=[i*2*NUMBER_EL_MOTIF,NUMBER_EL_MOTIF+i*2*NUMBER_EL_MOTIF],xy_offset=XY_OFFSET,height_offset=HEIGHT_OFFSET,symmetry_couple=SYMMETRY,level=LEVEL,cap=CAP,attach_sorbate_number=EXTRA_SORBATE,first_or_second=SWITCH_EXTRA_SORBATE,mirror=MIRROR_EXTRA_SORBATE,build_grid=BUILD_GRID)
 
 ##<Adding Gaussian peaks>##
-NUMBER_GAUSSIAN_PEAK=6#how many gaussian peaks would you like to add?
+NUMBER_GAUSSIAN_PEAK=4#how many gaussian peaks would you like to add?
 EL_GAUSSIAN_PEAK=['O']*NUMBER_GAUSSIAN_PEAK#the element of each gaussian peak
 FIRST_PEAK_HEIGHT=1
 GAUSSIAN_OCC_INIT, GAUSSIAN_LAYER_SPACING, GAUSSIAN_U_INIT=1,2,0.1
@@ -105,7 +105,7 @@ el_freezed=RAXR_EL
 Domain1=domain_creator.add_freezed_els(domain=Domain1,el=el_freezed,u=U_RAXS_LIST,oc=OC_RAXS_LIST,x=X_RAXS_LIST,y=Y_RAXS_LIST,z=Z_RAXS_LIST)
 
 ##<Freeze Elements using adding_gaussian function>##
-NUMBER_GAUSSIAN_PEAK_FREEZE=6#number of resonant element peaks
+NUMBER_GAUSSIAN_PEAK_FREEZE=4#number of resonant element peaks
 EL_GAUSSIAN_PEAK_FREEZE=RAXR_EL 
 FIRST_PEAK_HEIGHT_FREEZE=5
 GAUSSIAN_OCC_INIT_FREEZE, GAUSSIAN_LAYER_SPACING_FREEZE, GAUSSIAN_U_INIT_FREEZE=1,2,0.1
