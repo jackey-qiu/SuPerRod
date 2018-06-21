@@ -27,13 +27,8 @@ plot_e_model=False                                                      ##plot e
 plot_e_FS=False                              ##plot electron density profiles based on Foriour synthesis?##
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=True                                                                     ##plot RAXR results?##
-<<<<<<< HEAD
 plot_AP_Q=False                                                               ##plot Foriour components?##
 gx_file_path='/Users/cqiu/model_file/scale_RAXR_As_cmp_CS_OS_OS_run2_Jun12combined_ran.gx'                         ##where is your gx file##
-=======
-plot_AP_Q=False                                                              ##plot Foriour components?##
-gx_file_path='P:\\temp_model\\scale_RAXR_As_cmp_CS_OS_OS_run2_Jun12combined_ran.gx'                         ##where is your gx file##
->>>>>>> 23dca1bf07e5598b2c9a615f60e2fd7ae69c68a2
 ##########################################################################################################
 
 def local_func():
@@ -79,12 +74,12 @@ def plot_all(path=module_path_locator(),make_offset_of_total_e=False,fit_e_profi
     AP_Q_file=os.path.join(PATH,"temp_plot_raxr_A_P_Q")
     e_den_subtracted=None
     e_den_raxr_MI=None
-    water_scaling=None
+    water_scaling=0.033
     #plot electron density profile
     if plot_e_model:
         data_eden=pickle.load(open(e_file,"rb"))
         edata,labels=data_eden[0],data_eden[1]
-        water_scaling=pickle.load(open(water_scaling_file,"rb"))[-1]#total water scaling factor to be used in Gaussian fit below
+        #water_scaling=pickle.load(open(water_scaling_file,"rb"))[-1]#total water scaling factor to be used in Gaussian fit below
         N=len(labels)
         fig=pyplot.figure(figsize=(6,6))
         if plot_e_FS:
@@ -395,8 +390,9 @@ def fit_e_density(path=module_path_locator(),fit_range=[1,40],zs=None,N=8):
     data_file=os.path.join(PATH,"temp_plot_eden_fourier_synthesis")
     data=np.append([pickle.load(open(data_file,"rb"))[0]],[pickle.load(open(data_file,"rb"))[1]],axis=0).transpose()
     ##extract water scaling value##
-    water_scaling_file=os.path.join(PATH,"water_scaling")
-    water_scaling=pickle.load(open(water_scaling_file,"rb"))[-1]
+    #water_scaling_file=os.path.join(PATH,"water_scaling")
+    #water_scaling=pickle.load(open(water_scaling_file,"rb"))[-1]
+    water_Scaling=0.033
     x,y=[],[]
     for i in range(len(data)):
         if data[i,0]>fit_range[0] and data[i,0]<fit_range[1]:

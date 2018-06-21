@@ -2,3 +2,5 @@
 *.pyo
 dump_files/*
 !dump_files/*.py
+scripts/standard_scripts/fit_structure_forward/differential evolution/hematite_rcut/*_cus.py
+scripts/standard_scripts/fit_structure_forward/differential evolution/muscovite001/*_cus.py
