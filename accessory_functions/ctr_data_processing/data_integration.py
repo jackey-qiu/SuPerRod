@@ -2341,7 +2341,7 @@ class data_integration:
                                 if self.data_info[item][scan_index][0]<100:#engergy in Kev
                                     temp_data_array=np.append(temp_data_array,np.array(self.data_info[item][scan_index])[:,np.newaxis]*1000,axis=1)
                                 else:
-                                    temp_data_array=np.append(temp_data_array,int(np.array(self.data_info[item][scan_index])[:,np.newaxis]),axis=1)
+                                    temp_data_array=np.append(temp_data_array,np.array(self.data_info[item][scan_index])[:,np.newaxis],axis=1)
                             else:
                                 temp_data_array=np.append(temp_data_array,np.array(self.data_info[item][scan_index])[:,np.newaxis],axis=1)
                         else:
