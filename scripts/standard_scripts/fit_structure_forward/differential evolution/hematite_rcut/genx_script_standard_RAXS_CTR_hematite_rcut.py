@@ -1,8 +1,4 @@
 import models.sxrd_new1 as model
-<<<<<<< HEAD
-#import models.raxs as model2
-=======
->>>>>>> 23dca1bf07e5598b2c9a615f60e2fd7ae69c68a2
 from models.utils import UserVars
 from datetime import datetime
 import numpy as np
@@ -103,12 +99,13 @@ exp_const = 4*kvect/LAM
 auc=unitcell.a*unitcell.b*np.sin(unitcell.gamma)
 
 #bond valence setup#
-COVALENT_HYDROGEN_RANDOM=False
-COUNT_DISTAL_OXYGEN=False
+COVALENT_HYDROGEN_RANDOM=True
+COUNT_DISTAL_OXYGEN=True
 ADD_DISTAL_LIGAND_WILD=[[False]*10]*10
 BOND_VALENCE_WAIVER=[]
 CONSIDER_WATER_IN_BV=False
 if not CONSIDER_WATER_IN_BV:BOND_VALENCE_WAIVER=BOND_VALENCE_WAIVER+['Os'+str(ii+1) for ii in range(10)]
+DOMAINS_BV=range(len(pickup_index))
 
 BASAL_EL=[[None]+each_domain[:-1] for each_domain in SORBATE]
 sym_site_index=[[[0,1]]* len(each) for each in pickup_index]
@@ -119,7 +116,8 @@ full_layer_pick=[None]*len(half_layer)+full_layer
 OS_X_REF=domain_creator.init_OS_auto(pickup_index,half_layer+full_layer,OS_index=[6,21])[0]
 OS_Y_REF=domain_creator.init_OS_auto(pickup_index,half_layer+full_layer,OS_index=[6,21])[1]
 OS_Z_REF=domain_creator.init_OS_auto(pickup_index,half_layer+full_layer,OS_index=[6,21])[2]
-DOMAINS_BV=range(len(pickup_index))
+
+#which domains you want to create tables for?
 TABLE_DOMAINS=[1]*len(pickup_index)
 
 #if only you want to specify the coords of sorbates

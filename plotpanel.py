@@ -1136,7 +1136,7 @@ class ErrorPlotPanel(PlotPanel):
         self.ax.set_autoscale_on(False)
         
         self.ax.lines = []
-        if data == None:
+        if array(data).any() == None:
             theta = arange(0.1,10,0.001)
             self.ax.plot(theta,floor(15-theta),'-r')
         else:            

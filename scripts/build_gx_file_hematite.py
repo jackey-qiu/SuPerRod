@@ -10,30 +10,30 @@ import filehandling as io
 import numpy as np
 
 ##################################################################Tune the file here only################################################################
-gx_file_name='As_cmp_CS_OS_CS_OS_run1_Jun12.gx'                                                                                                                             #                                                                                                                                         #
+gx_file_name='P:\\temp_model\\Pb_anneal_rcut_run1_Jul19.gx'                                                                                                                             #                                                                                                                                         #
                                                                                                                                                         #
-path_of_data='/Users/cqiu/app/SuPerRod/dump_files/temp_full_dataset.dat'                                                               #
+path_of_data='P:\\apps\\SuPerRod\\dump_files\\temp_full_dataset_pb_anneal.dat'                                                               #
 data_loader='uaf_CTR_raxs_2_stand_alone'##can be easily customized from the data_loader plugin                                                          #
                                                                                                                                                         #
-domain_setup_HLT=[3,3]#2 for short HLT, 3 for long HLT                                                                                                    #
-domain_setup_FLT=[0]#0 for short FLT, 1 for long FLT                                                                                              #
-water_layer_number=[0,2,2]                                                                                                                          #
+domain_setup_HLT=[3]#2 for short HLT, 3 for long HLT                                                                                                    #
+domain_setup_FLT=[0,1]#0 for short FLT, 1 for long FLT                                                                                              #
+water_layer_number=[4,4,4]                                                                                                                          #
 atom_group_depth_one_domain=10                                                                                                                          #
-atom_group_scheme_inter_domains=[[1,0]]#starting from 0 (0 for Domain1)                                                                           #
+atom_group_scheme_inter_domains=[[2,1]]#starting from 0 (0 for Domain1)                                                                           #
 atom_group_depth_inter_domains=[[0,10]]                                                                                                          #
                                                                                                                                                         #
-sorbate='As'                                                                                                                                            #
+sorbate='Pb'                                                                                                                                            #
 LOCAL_STRUCTURE_MATCH_LIB='{\'trigonal_pyramid\':[\'Pb\'],\'octahedral\':[\'Sb\',\'Fe\',\'Cd\',\'Cu\',\'Zn\'],\'tetrahedral\':[\'As\',\'P\',\'Cr\']}'   #
-binding_mode=[['CS_H'],['OS_H'],['OS_F']]                                                                                  #
-O_NUMBER=[[2,2],[4,4],[4,4]]                                                                                                                #
+binding_mode=[['clean_H'],['TD_F'],['TD_F']]                                                                                  #
+O_NUMBER=[[0,0],[0,0],[0,0]]                                                                                                                #
                                                                                                                                                         #
-num_raxr_datasets=9                                                                                                                                    #
+num_raxr_datasets=0                                                                                                                                    #
 raxr_fit_mode='MI'                                                                                                                                      #
 absorption_edge=11873                                                                                                                                   #
 x_ray_wal=0.8625                                                                                                                                       #
 f1f2_file_name='As_K_edge_March28_2018.f1f2'                                                                                                                         #
                                                                                                                                                         #
-use_bv=0                                                                                                                                                #
+use_bv=1                                                                                                                                                #
 bv_waiver=[]                                                                                                                                            #
 #########################################################################################################################################################
 

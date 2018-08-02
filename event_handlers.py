@@ -86,7 +86,7 @@ def open(frame, event):
      
     dlg = wx.FileDialog(frame, message="Open", defaultFile="",\
                         wildcard="GenX File (*.gx)|*.gx",\
-                         style=wx.OPEN | wx.CHANGE_DIR 
+                         style=wx.FD_OPEN | wx.FD_CHANGE_DIR 
                        )
     if dlg.ShowModal() == wx.ID_OK:
         path = dlg.GetPath()
@@ -301,7 +301,7 @@ def export_table(frame, event):
     '''
     dlg = wx.FileDialog(frame, message="Export data", defaultFile="",\
                         wildcard="Table File (*.tab)|*.tab",\
-                         style=wx.SAVE | wx.CHANGE_DIR 
+                         style=wx.FD_SAVE | wx.FD_CHANGE_DIR 
                        )
     if dlg.ShowModal() == wx.ID_OK:
         fname = dlg.GetPath()
@@ -387,7 +387,7 @@ def import_table(frame, event):
     '''
     dlg = wx.FileDialog(frame, message="Import script", defaultFile="",\
                     wildcard="Table File (*.tab)|*.tab|All files (*.*)|*.*",\
-                         style=wx.OPEN | wx.CHANGE_DIR 
+                         style=wx.FD_OPEN | wx.FD_CHANGE_DIR 
                        )
     if dlg.ShowModal() == wx.ID_OK:
         try:

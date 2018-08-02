@@ -1810,8 +1810,13 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
     f_par=open(par_file,'r')
     lines_par=f_par.readlines()
     for line_par in lines_par:
+        
         if line_par[0:4] in ["gp_"+x[0] for x in el_substrate]:
-            line_par_items=line_par.split('\t')[:-1]
+            line_par_items=line_par.split('\t')
+            if len(line_par_items)==7:
+                line_par_items=line_par_items[:-1]
+            elif len(line_par_items)==7:
+                pass
             parameter_values=np.append(parameter_values,[line_par_items],axis=0)
     f_par.close()
 

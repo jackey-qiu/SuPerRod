@@ -1195,7 +1195,7 @@ dump_file_Feb1_2017=[['total_e_profile_100mM_LiCl_Feb1_2017','100mM_LiCl_Feb1_20
 label_Feb1_2017=['100 mM LiCl(3.9(3) Zr/AUC)','100 mM NaCl(3.4(1) Zr/AUC)','100 mM KCl(3.0(1) Zr/AUC)','100 mM RbCl(2.2(1) Zr/AUC)','100 mM CsCl(1.6(1) Zr/AUC)']
 file_head='P:\\My stuff\\Manuscripts\\zr on mica (cation effect)\\Matlab models\\results_in_all\\Feb8_2018'
 dump_file_Feb8_2018=[['total_e_profile_100mM_LiCl_Feb08_2018','100mM_LiCl_Feb08_2018_rho'],['total_e_profile_100mM_NaCl_Feb08_2018','100mM_NaCl_Feb08_2018_rho'],['total_e_profile_100mM_KCl_Feb08_2018','100mM_KCl_Feb08_2018_rho'],['total_e_profile_100mM_RbCl_Feb08_2018','100mM_RbCl_Feb08_2018_rho','Rb_test_May18b_rho'],['total_e_profile_100mM_CsCl_Feb08_2018','100mM_CsCl_Feb08_2018_rho']]
-label_Feb8_2018=['100 mM LiCl(3.7(1) Zr/AUC)','100 mM NaCl(3.4(1) Zr/AUC)','100 mM KCl(3.1(1) Zr/AUC)','100 mM RbCl(2.4(1) Zr/AUC)','100 mM CsCl(1.8(1) Zr/AUC)']
+label_Feb8_2018=['0.1 M LiCl(3.7(1) Zr/AUC)','0.1 M NaCl(3.4(1) Zr/AUC)','0.1 M KCl(3.1(1) Zr/AUC)','0.1 M RbCl(2.4(1) Zr/AUC)','0.1 M CsCl(1.8(1) Zr/AUC)']
 def plot_multiple_e_profiles_matlab_output(file_head=module_path_locator(),dump_files=dump_file_Feb8_2018,label_marks=label_Feb8_2018,color_type=1,z_offset_Rb=0.073):
     def _cal_percentage_(data,cutoff=2.2,cutoff_from=0,label=''):#use to calculate the percentage of resonant element area within the cutoff distance from mineral surface
         z,e=data[0],data[1]
@@ -1263,7 +1263,8 @@ def plot_multiple_e_profiles_matlab_output(file_head=module_path_locator(),dump_
     #ax2.legend(fontsize=12)
     ax1.set_ylim(0,30)
     ax1.set_xlim(-5,35)
-    ax1.plot([2.5,2.5],[0,42],':',color='black')
+    #ax1.plot([2.5,2.5],[0,42],':',color='black')
+    ax1.fill_between([2.2,2.6],[0,0],[42,42],color='black',alpha=0.15)
     #ax1.plot([2.2,2.2],[0,42],':',color='black')
     for label in ax1.get_xticklabels() :
         label.set_fontproperties(hfont['fontname'])

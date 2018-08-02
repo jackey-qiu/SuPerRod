@@ -75,9 +75,9 @@ if mpi_tag:
     size=comm.Get_size()
     rank=comm.Get_rank()
 else:
-    spec_path='M:\\fwog\\members\\qiu05\\March_21_2018_APS\\schmidt\\hem'
-    spec_name='hem_pol_sng_2_1.spec'
-    scan_number=range(124,160)#[]#[55]+range(35,50)#+range(35,50)+[55]
+    spec_path='M://fwog//members//qiu05//Dec_2017_APS//fer'
+    spec_name='rcut_cmp_zn_7mm_1.spec'
+    scan_number=range(11,32)#[]#[55]+range(35,50)#+range(35,50)+[55]
     substrate='hematite'
     size=1
     rank=0
@@ -173,8 +173,8 @@ if beamline=='APS':
 elif beamline=='ESRF':
     GENERAL_LABELS={'H':'H','K':'K','L':'L','E':'energy'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
     CORRECTION_LABELS={'time':'sec','norm':'ic0','transmision':'transm'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
-    ANGLE_LABELS={'del':'del','eta':'eta','chi':'chi','phi':'phi','nu':'nu','mu':'mu'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
-    ANGLE_LABELS_ESCAN={'del':'del','eta':'eta','chi':'chi','phi':'phi','nu':'nu','mu':'mu'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
+    ANGLE_LABELS={'del':'delc','eta':'etac','chi':'chic','phi':'phic','nu':'nuc','mu':'muc'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
+    ANGLE_LABELS_ESCAN={'del':'delc','eta':'etac','chi':'chic','phi':'phic','nu':'nuc','mu':'muc'}#Values are symbols for keys. (Beamline dependent, default symbols are based on APS 13IDC beamline)
     #G label positions (n_azt: azimuthal reference vector positions @3rd to 6th numbers counting from left to right at G0 line)
     #so are the other symbols: cell (lattice cell info), or0 (first orientation matrix), or1 (second orientation matrix), lambda (x ray wavelength)
     G_LABELS={'n_azt':['G0',range(3,6)],'cell':['G1',range(0,6)],'or0':['G1',range(12,15)+range(18,24)+[30]],'or1':['G1',range(15,18)+range(24,30)+[30]],'lambda':['G4',range(3,4)]}

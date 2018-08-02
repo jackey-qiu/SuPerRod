@@ -1295,6 +1295,7 @@ def output_model_files(i,COVALENT_HYDROGEN_NUMBER,PROTONATION_DISTAL_OXYGEN,SORB
         domain_creator.make_publication_table2(model_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'),par_file=os.path.join(output_file_path,"test.tab"),el_substrate=['Fe','O'],el_sorbate=['Pb'],abc=[5.038,5.434,7.3707])
     except:
         pass
+
     return None
 
 def create_dummy_raxr_data(beta,model,inst, bulk, domain, unitcell,COHERENCE,SURFACE_PARMS,batch_path_head,output_file_path):
