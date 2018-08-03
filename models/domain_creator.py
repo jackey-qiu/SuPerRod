@@ -1859,18 +1859,7 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                 return '%i(%i)'%(1,error_tag)
             else:
                 return '%2.1f(%i)'%(value,error_tag)
-        elif decimal_place==1:
-            return '%2.1f'%(value)+'('+str(error_tag)+')'
-        elif decimal_place==2:
-            return '%2.2f'%(value)+'('+str(error_tag)+')'
-        elif decimal_place==3:
-            return '%2.3f'%(value)+'('+str(error_tag)+')'
-        elif decimal_place==4:
-            return '%2.4f'%(value)+'('+str(error_tag)+')'
-        elif decimal_place==5:
-            return '%2.5f'%(value)+'('+str(error_tag)+')'
-        else:
-            return '%2.5f'%(value)+'('+str(error_tag)+')'
+        return '{0:2.{1}f}({2})'.format(value,decimal_place,error_tag)
 
     for line_model in lines_model:
         line_model_items=line_model.rstrip().split('\t')
