@@ -1287,14 +1287,9 @@ def output_model_files(i,COVALENT_HYDROGEN_NUMBER,PROTONATION_DISTAL_OXYGEN,SORB
     test=xyz.formate_vtk(os.path.join(output_file_path,'Model_domain'+str(i+1)+'.xyz'))
     test.all_in_all()
     #output for publication
-    if water_pars['use_default']:
-        domain_creator.print_data_for_publication_B2(N_sorbate=np.sum(SORBATE_NUMBER[i])+np.sum(O_NUMBER[i])+WATER_NUMBER[i],domain=VARS['domain'+str(int(i+1))+'A'],z_shift=1,layer_types=(half_layer+full_layer)[i],save_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'))
-    else:
-        domain_creator.print_data_for_publication_B2(N_sorbate=np.sum(SORBATE_NUMBER[i])+np.sum(O_NUMBER[i]),domain=VARS['domain'+str(int(i+1))+'A'],z_shift=1,layer_types=(half_layer+full_layer)[i],save_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'))
-    try:#make sure you have the test.tab file in the specified folder
-        domain_creator.make_publication_table2(model_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'),par_file=os.path.join(output_file_path,"test.tab"),el_substrate=['Fe','O'],el_sorbate=['Pb'],abc=[5.038,5.434,7.3707])
-    except:
-        pass
+    domain_creator.print_data_for_publication_B2(N_sorbate=np.sum(SORBATE_NUMBER[i])+np.sum(O_NUMBER[i])+WATER_NUMBER[i],domain=VARS['domain'+str(int(i+1))+'A'],z_shift=1,layer_types=(half_layer+full_layer)[i],save_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'))
+    #make sure you have the test.tab file in the specified folder
+    domain_creator.make_publication_table2(model_file=os.path.join(output_file_path,'Model_domain'+str(i+1)+'A_publication.dat'),par_file=os.path.join(output_file_path,"test.tab"),el_substrate=[each for each in list(set(VARS['domain'+str(i+1)+'A'].el)) if each not in VARS['SORBATE_EL_LIST']],el_sorbate=VARS['SORBATE_EL_LIST'],abc=[VARS['unitcell'].a,VARS['unitcell'].b,VARS['unitcell'].c])
 
     return None
 

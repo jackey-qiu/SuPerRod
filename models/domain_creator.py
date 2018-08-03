@@ -1807,6 +1807,7 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                'Fe10':'Fe10Fe12','Fe12':'Fe10Fe12'}
 
     parameter_values=np.zeros((0,6))
+    parameter_values_other=np.zeros((0,6))
     f_par=open(par_file,'r')
     lines_par=f_par.readlines()
     for line_par in lines_par:
@@ -1815,16 +1816,21 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
             line_par_items=line_par.split('\t')
             if len(line_par_items)==7:
                 line_par_items=line_par_items[:-1]
-            elif len(line_par_items)==7:
+            else:
                 pass
             parameter_values=np.append(parameter_values,[line_par_items],axis=0)
+        else:
+            line_par_items=line_par.split('\t')
+            if len(line_par_items)==7:
+                line_par_items=line_par_items[:-1]
+            else:
+                pass
+            parameter_values_other=np.append(parameter_values_other,[line_par_items],axis=0)
     f_par.close()
-
     lines_model=f_model.readlines()
-
     f_publication.write("Element\tX(fra)\tY(fra)\tZ(fra)\tdx(errors)(Angstrom)\tdy(errors)(Angstrom)\tdz(errors)(Angstrom)\tu\tocc\n")
     def _formate_values(value,errors):
-        import math
+        import math,decimal
         #eg value='1.245',errors=[-0.1,0.2], will return 1.2(2)
         value=float(value)
         error=None
@@ -1832,12 +1838,28 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
             error=abs(errors[0])
         else:
             error=abs(errors[1])
-
-        decimal_place=abs(int(math.log10(abs(error))))+1
-        error_tag=int(round(10**decimal_place*error))
-        if error_tag==10:
+        decimal_place=None
+        error_tag=''
+        try:
+            temp='%e'%error
+            if '+' in temp:
+                error_tag=int(error)
+                decimal_place=0
+            else:
+                decimal_place=int(temp.split('-')[1])
+            if decimal_place>0:
+                error_tag=int(round(10**decimal_place*error))
+        except:
+            pass
+        if decimal_place>0 and error_tag==10:
             error_tag=9
-        if decimal_place==1:
+        
+        if decimal_place==0:
+            if value<1:
+                return '%i(%i)'%(1,error_tag)
+            else:
+                return '%2.1f(%i)'%(value,error_tag)
+        elif decimal_place==1:
             return '%2.1f'%(value)+'('+str(error_tag)+')'
         elif decimal_place==2:
             return '%2.2f'%(value)+'('+str(error_tag)+')'
@@ -1848,13 +1870,73 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
         elif decimal_place==5:
             return '%2.5f'%(value)+'('+str(error_tag)+')'
         else:
-            return None
+            return '%2.5f'%(value)+'('+str(error_tag)+')'
 
     for line_model in lines_model:
         line_model_items=line_model.rstrip().split('\t')
         line_publication_items=line_model_items[1:]
         id=[None,line_model_items[0].split("_")[-1]]
-        if line_model_items[1] in el_substrate and el_sorbate[0] not in line_model_items[0]:
+        if 'Os' in line_model_items[0] and line_model_items[1]=='O':#water molecules
+            id=line_model_items[0]
+            water_index,domain_tag=int(id.split('_')[0].replace('Os','')),id.split('_')[1].replace('A','')
+            par_u_name='gp_waters_set{0}_{1}.setu'.format(water_index/3+1,domain_tag)
+            par_oc_name='gp_waters_set{0}_{1}.setoc'.format(water_index/3+1,domain_tag)
+            par_dy_name='gp_waters_set{0}_{1}.setdy'.format(water_index/3+1,domain_tag)
+            par_dz_name='rgh_domain{0}.setV_shift_W_{1}'.format(domain_tag.replace('D',''),water_index/3+1)
+            for par in parameter_values_other:
+                if par[0]==par_u_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[7]=_formate_values(line_publication_items[7],errors)
+                elif par[0]==par_oc_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[8]=_formate_values(line_publication_items[8],errors)
+                elif par[0]==par_dy_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[2]=_formate_values(line_publication_items[2],errors)
+                    line_publication_items[1]=_formate_values(line_publication_items[1],errors)
+                elif par[0]==par_dz_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[3]=_formate_values(line_publication_items[3],np.array(errors)/abc[2])
+            line_publication_items[4]='-'
+            line_publication_items[5]='-'
+            line_publication_items[6]='-'
+        elif el_sorbate[0]==line_model_items[1]:#sorbate
+            id=line_model_items[0]
+            sorbate_index,domain_tag=int(id.split('_')[0].replace(el_sorbate[0],'')),id.split('_')[1].replace('A','')
+            par_u_name='gp_{0}_set{1}_{2}.setu'.format(el_sorbate[0],sorbate_index/3+1,domain_tag)
+            par_oc_name='gp_sorbates_set{0}_{1}.setoc'.format(sorbate_index,domain_tag)
+            for par in parameter_values_other:
+                if par[0]==par_u_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[7]=_formate_values(line_publication_items[7],errors)
+                elif par[0]==par_oc_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[8]=_formate_values(line_publication_items[8],errors)
+            line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
+            line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
+            line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
+            line_publication_items[4]='-'
+            line_publication_items[5]='-'
+            line_publication_items[6]='-'
+        elif el_sorbate[0] in line_model_items[0] and 'HO' in line_model_items[0]:#distal oxygen
+            id=line_model_items[0]
+            distal_O_index,sorbate_index,domain_tag=int(id.split('_')[0].replace('HO','')),int(id.split('_')[1].replace(el_sorbate[0],'')),id.split('_')[2].replace('A','')
+            par_u_name='gp_{0}_set{1}_{2}.setu'.format('HO',distal_O_index,domain_tag)
+            par_oc_name='gp_sorbates_set{0}_{1}.setoc'.format(sorbate_index,domain_tag)
+            for par in parameter_values_other:
+                if par[0]==par_u_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[7]=_formate_values(line_publication_items[7],errors)
+                elif par[0]==par_oc_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[8]=_formate_values(line_publication_items[8],errors)
+            line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
+            line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
+            line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
+            line_publication_items[4]='-'
+            line_publication_items[5]='-'
+            line_publication_items[6]='-'
+        elif line_model_items[1] in el_substrate and [True]*3==[each not in line_model_items[0] for each in [el_sorbate[0],'HO','Os']]:
             id[0]=line_model_items[1]+line_model_items[0].split("_")[1]
             for par in parameter_values:
                 if match_lib[id[0]]==par[0].split("_")[1] and id[-1][0:-1] in par[0] and par[-1]!='None' and par[-1]!='-':
@@ -1870,8 +1952,15 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                         line_publication_items[7]=_formate_values(line_publication_items[7],errors)
                     elif opt=="setoc":
                         line_publication_items[8]=_formate_values(line_publication_items[8],errors)
-        elif line_model_items[1] in el_sorbate:#to be completed
-            pass
+        else:
+            line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
+            line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
+            line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
+            line_publication_items[4]='-'
+            line_publication_items[5]='-'
+            line_publication_items[6]='-'
+            line_publication_items[7]=_formate_values(line_publication_items[7],[0,0])
+            line_publication_items[8]=_formate_values(line_publication_items[8],[0,0])
         f_publication.write('\t'.join(line_publication_items)+"\n")
     f_model.close()
     f_publication.close()
