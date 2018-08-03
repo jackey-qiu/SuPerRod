@@ -1894,6 +1894,9 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
             sorbate_index,domain_tag=int(id.split('_')[0].replace(el_sorbate[0],'')),id.split('_')[1].replace('A','')
             par_u_name='gp_{0}_set{1}_{2}.setu'.format(el_sorbate[0],sorbate_index/3+1,domain_tag)
             par_oc_name='gp_sorbates_set{0}_{1}.setoc'.format(sorbate_index,domain_tag)
+            par_dx_name='gp_{0}_set{1}_{2}.setdx'.format(el_sorbate[0],sorbate_index/3+1,domain_tag)
+            par_dy_name='gp_{0}_set{1}_{2}.setdy'.format(el_sorbate[0],sorbate_index/3+1,domain_tag)
+            par_dz_name='gp_{0}_set{1}_{2}.setdz'.format(el_sorbate[0],sorbate_index/3+1,domain_tag)
             for par in parameter_values_other:
                 if par[0]==par_u_name:
                     errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
@@ -1901,9 +1904,21 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                 elif par[0]==par_oc_name:
                     errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
                     line_publication_items[8]=_formate_values(line_publication_items[8],errors)
-            line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
-            line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
-            line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
+                elif par[0]==par_dx_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[1]=_formate_values(line_publication_items[1],errors)
+                elif par[0]==par_dy_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[2]=_formate_values(line_publication_items[2],errors)
+                elif par[0]==par_dz_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[3]=_formate_values(line_publication_items[3],errors)
+            if '(' not in line_publication_items[1]:
+                line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
+            if '(' not in line_publication_items[2]:
+                line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
+            if '(' not in line_publication_items[3]:
+                line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
             line_publication_items[4]='-'
             line_publication_items[5]='-'
             line_publication_items[6]='-'
@@ -1912,6 +1927,10 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
             distal_O_index,sorbate_index,domain_tag=int(id.split('_')[0].replace('HO','')),int(id.split('_')[1].replace(el_sorbate[0],'')),id.split('_')[2].replace('A','')
             par_u_name='gp_{0}_set{1}_{2}.setu'.format('HO',distal_O_index,domain_tag)
             par_oc_name='gp_sorbates_set{0}_{1}.setoc'.format(sorbate_index,domain_tag)
+            par_dx_name='gp_{0}_set{1}_{2}.setdx'.format('HO',distal_O_index,domain_tag)
+            par_dy_name='gp_{0}_set{1}_{2}.setdy'.format('HO',distal_O_index,domain_tag)
+            par_dz_name='gp_{0}_set{1}_{2}.setdz'.format('HO',distal_O_index,domain_tag)
+            
             for par in parameter_values_other:
                 if par[0]==par_u_name:
                     errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
@@ -1919,9 +1938,21 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                 elif par[0]==par_oc_name:
                     errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
                     line_publication_items[8]=_formate_values(line_publication_items[8],errors)
-            line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
-            line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
-            line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
+                elif par[0]==par_dx_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[1]=_formate_values(line_publication_items[1],errors)
+                elif par[0]==par_dy_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[2]=_formate_values(line_publication_items[2],errors)
+                elif par[0]==par_dz_name:
+                    errors=[float(par[-1].split(",")[0][1:]),float(par[-1].split(",")[1][:-1])]
+                    line_publication_items[3]=_formate_values(line_publication_items[3],errors)
+            if '(' not in line_publication_items[1]:
+                line_publication_items[1]=_formate_values(line_publication_items[1],[0,0])
+            if '(' not in line_publication_items[2]:
+                line_publication_items[2]=_formate_values(line_publication_items[2],[0,0])
+            if '(' not in line_publication_items[3]:
+                line_publication_items[3]=_formate_values(line_publication_items[3],[0,0])
             line_publication_items[4]='-'
             line_publication_items[5]='-'
             line_publication_items[6]='-'
