@@ -28,7 +28,7 @@ plot_e_FS=False                              ##plot electron density profiles ba
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=False                                                                     ##plot RAXR results?##
 plot_AP_Q=False                                                               ##plot Foriour components?##
-gx_file_path='P:\\temp_model\\Pb_anneal_rcut_ES1_run1_fit_water_only_Aug2_ran.gx'                        ##where is your gx file##
+gx_file_path='P:\\temp_model\\clean_anneal_rcut_run1_Aug6_ran.gx'                        ##where is your gx file##
 ##########################################################################################################
 
 def local_func():

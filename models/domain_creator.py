@@ -161,7 +161,15 @@ def set_OS(domain_names=['domain5','domain4']):
     eval('rgh_'+domain_names[0]+'.setTop_angle_OS(rgh_'+domain_names[1]+'.getTop_angle_OS())')
     eval('rgh_'+domain_names[0]+'.setR0_OS(rgh_'+domain_names[1]+'.getR0_OS())')
     eval('rgh_'+domain_names[0]+'.setPhi_OS(rgh_'+domain_names[1]+'.getPhi_OS())')
-
+#function to group dxdydz of sorbate atoms for two symmetry domains    
+def make_commands_sorbates(sorbate='HO',sets=['set1','set1'],domain=['D3','D2']):
+    commands=[]
+    f1_dx='gp_{0}_{1}_{2}.set{3}(-gp_{0}_{5}_{4}.get{3}())'.format
+    f1_dydz='gp_{0}_{1}_{2}.set{3}(gp_{0}_{5}_{4}.get{3}())'.format
+    commands.append(f1_dx(sorbate,sets[0],domain[0],'dx',domain[1],sets[1]))
+    commands.append(f1_dydz(sorbate,sets[0],domain[0],'dy',domain[1],sets[1]))
+    commands.append(f1_dydz(sorbate,sets[0],domain[0],'dz',domain[1],sets[1]))
+    return commands
 #function to group bidentate pars from different domains (to be placed inside sim function)
 def set_BD(domain_names=[2,1],sorbate_sets=1,distal_oxygen_number=1,sorbate='Pb'):
     for i in range(sorbate_sets):
@@ -1811,21 +1819,21 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
     f_par=open(par_file,'r')
     lines_par=f_par.readlines()
     for line_par in lines_par:
-        
-        if line_par[0:4] in ["gp_"+x[0] for x in el_substrate]:
-            line_par_items=line_par.split('\t')
-            if len(line_par_items)==7:
-                line_par_items=line_par_items[:-1]
+        if line_par !='\t\n':
+            if line_par[0:4] in ["gp_"+x[0] for x in el_substrate]:
+                line_par_items=line_par.split('\t')
+                if len(line_par_items)==7:
+                    line_par_items=line_par_items[:-1]
+                else:
+                    pass
+                parameter_values=np.append(parameter_values,[line_par_items],axis=0)
             else:
-                pass
-            parameter_values=np.append(parameter_values,[line_par_items],axis=0)
-        else:
-            line_par_items=line_par.split('\t')
-            if len(line_par_items)==7:
-                line_par_items=line_par_items[:-1]
-            else:
-                pass
-            parameter_values_other=np.append(parameter_values_other,[line_par_items],axis=0)
+                line_par_items=line_par.split('\t')
+                if len(line_par_items)==7:
+                    line_par_items=line_par_items[:-1]
+                else:
+                    pass
+                parameter_values_other=np.append(parameter_values_other,[line_par_items],axis=0)
     f_par.close()
     lines_model=f_model.readlines()
     f_publication.write("Element\tX(fra)\tY(fra)\tZ(fra)\tdx(errors)(Angstrom)\tdy(errors)(Angstrom)\tdz(errors)(Angstrom)\tu\tocc\n")

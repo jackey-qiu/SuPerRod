@@ -135,7 +135,7 @@ SORBATE_NUMBER_FL_EXTRA=[[2],[2],[2],[2],[2],[2],[2]]
 commands_surface=domain_creator.generate_commands_for_surface_atom_grouping_new(np.array(GROUPING_SCHEMES),domain_creator.translate_domain_type(GROUPING_SCHEMES,half_layer+full_layer),GROUPING_DEPTH)
 #you can add more commads in this list here(like 'command1','command2')#
 commands_other=[]
-commands=commands_other+commands_surface
+commands=commands_surface+commands_other
 ##############################################end of main setup zone############################################
 #                                                                                                              #
 #                                                                                                              #
