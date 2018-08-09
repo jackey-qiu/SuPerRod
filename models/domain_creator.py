@@ -1841,6 +1841,8 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
         import math,decimal
         #eg value='1.245',errors=[-0.1,0.2], will return 1.2(2)
         value=float(value)
+        if errors[0]==0 and errors[1]==0:
+            return '{:0.3f}()'.format(value)
         error=None
         if abs(errors[0])>=abs(errors[1]):
             error=abs(errors[0])
@@ -1867,6 +1869,7 @@ def make_publication_table2(model_file="D:\\Model_domain3A_publication.dat",par_
                 return '%i(%i)'%(1,error_tag)
             else:
                 return '%2.1f(%i)'%(value,error_tag)
+
         return '{0:2.{1}f}({2})'.format(value,decimal_place,error_tag)
 
     for line_model in lines_model:
