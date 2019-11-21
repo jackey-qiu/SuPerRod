@@ -235,7 +235,7 @@ class steric_check(share_edge):
         self.edge=np.array([p0,p1])
         self.cutting_limit=cutting_limit
         self.container=np.zeros((1,18))[0:0]
-        print "distance between anchor points is ",f2(p0,p1),'anstrom'
+        print("distance between anchor points is ",f2(p0,p1),'anstrom')
     def steric_check(self,theta_res=0.1,phi=np.pi/2,flag='off_center',print_path=None):
         #consider the steric constrain, flag 'off_center' (the center point is off the connection line of anchors)
         #is more favorable
@@ -272,13 +272,13 @@ class steric_check(share_edge):
                                 self.container[:,15],self.container[:,16]-0.7558,\
                                 self.container[:,17]-7.3707],names='phi,theta,low,A1,A2,A3,P20,P21,P22,P30,P31,P32,P40,P41,P42,P50,P51,P52')
         data.sort(order=('phi','theta','low'))
-        print "phi,theta,low_dt_limit,A_x,A_y,A_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z,P4_x,P4_y,P4_z,P5_x,P5_y,P5_z"
+        print("phi,theta,low_dt_limit,A_x,A_y,A_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z,P4_x,P4_y,P4_z,P5_x,P5_y,P5_z")
         if print_path!=None:
             np.savetxt(print_path,data,"%5.3f")
-            for i in np.loadtxt(print_path):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]"
+            for i in np.loadtxt(print_path):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]")
         else:
             np.savetxt('test',data,"%5.3f")
-            for i in np.loadtxt('test'):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]"
+            for i in np.loadtxt('test'):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]")
             os.remove('test')
 
 class share_corner(share_edge):
@@ -350,17 +350,17 @@ class steric_check2(share_corner2):
                                 self.container[:,18],self.container[:,19]-0.7558,
                                 self.container[:,20]-7.3707],names='phi,theta,low,A1,A2,A3,P10,P11,P12,P20,P21,P22,P30,P31,P32,P40,P41,P42,P50,P51,P52')
         data.sort(order=('low','phi'))
-        print "phi,0,low_dt_limit,A_x,A_y,A_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z,P4_x,P4_y,P4_z,P5_x,P5_y,P5_z"
+        print("phi,0,low_dt_limit,A_x,A_y,A_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z,P4_x,P4_y,P4_z,P5_x,P5_y,P5_z")
         if print_path!=None:
             np.savetxt(print_path,data,"%5.3f")
-            for i in np.loadtxt(print_path):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]"
+            for i in np.loadtxt(print_path):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]")
         else:
             np.savetxt('test',data,"%5.3f")
-            for i in np.loadtxt('test'):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]"
+            for i in np.loadtxt('test'):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]")
             os.remove('test')
 
 if __name__=='__main__':
     test1=octahedra_2.share_edge(edge=np.array([[0.,0.,0.],[5.,5.,5.]]))
     test1.cal_p2(theta=0,phi=np.pi/2,flag='cross_center')
     test1.share_face_init(flag=test1.flag)
-    print test1.face,test1.p3,test1.p4,test1.p5,test1.center_point
+    print(test1.face,test1.p3,test1.p4,test1.p5,test1.center_point)

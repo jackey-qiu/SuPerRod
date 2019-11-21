@@ -43,7 +43,7 @@ class PluginHandler:
         plugins = [s[:-3] for s in os.listdir(self.directory\
                         + self.plugin_folder) if '.py' == s[-3:] 
                         and s[:2] != '__' and \
-                        not self.loaded_plugins.has_key(s[:-3])]
+                        not (s[:-3] in self.loaded_plugins.keys())]
         return plugins
     
     def get_possible_plugins(self):
@@ -84,14 +84,21 @@ class PluginHandler:
         Returns True if plugin with name plugin_name is loaded, 
         otherwise False.
         '''
-        return self.loaded_plugins.has_key(plugin_name)
+        #return self.loaded_plugins.has_key(plugin_name)
+        return plugin_name in self.loaded_plugins
     
     def _load_module(self, module_name):
         ''' _load_module(self, module) --> module
         Load a module given by name
         '''
-        #print 'Trying to load module: ', module_name
-        module = __import__(module_name, globals(), locals(), ['plugins'])
+        #print ('Trying to load module: ', module_name)
+        #from . import data_loaders
+        import importlib
+        #default = data_loaders.default
+        #from data_loaders import default
+        module = __import__('plugins.'+module_name, globals(), locals(), ['plugins'])
+        #module = __import__(module_name, globals(), locals(), [])
+        #module = importlib.import_module(module_name)
         return module
         
     def unload_plugin(self, plugin_name):

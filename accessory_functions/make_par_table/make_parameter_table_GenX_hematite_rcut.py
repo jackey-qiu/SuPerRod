@@ -74,12 +74,12 @@ def make_structure(sorbate_N,O_N,water_N,Domains,Metal,binding_mode=['BD']*3,lon
             if sorbate_N[i]==0:
                 temp_sorbate=None
             else:
-                temp_sorbate['dxdydz']=[[Metal[i][j]+'_set'+str(2*j+1),[0,-0.5,0.5],'False'] for j in range(sorbate_N[i]/2)]+[['HO'+str(k+1)+'_set'+str(2*j+1),[0,-0.5,0.5],'False'] for j in range(len(O_N[i])) for k in range(O_N[i][j])]
+                temp_sorbate['dxdydz']=[[Metal[i][j]+'_set'+str(2*j+1),[0,-0.5,0.5],'False'] for j in range(int(sorbate_N[i]/2))]+[['HO'+str(k+1)+'_set'+str(2*j+1),[0,-0.5,0.5],'False'] for j in range(len(O_N[i])) for k in range(O_N[i][j])]
                 #temp_sorbate['u']=[[Metal[i][j]+'_set'+str(2*j+1),[0.2,0.2,1.],'True'] for j in range(sorbate_N[i]/2)]+[['HO'+str(k+1)+'_set'+str(2*j+1),[0.2,0.2,1.],'True'] for j in range(len(O_N[i])) for k in range(O_N[i][j])]
-                temp_sorbate['u']=[[Metal[i][j]+'_set'+str(2*j+1),[0.2,0.2,1.],'True'] for j in range(sorbate_N[i]/2)]+[['HO'+'_set'+str(2*j+1),[0.2,0.2,10.],'True'] for j in range(sorbate_N[i]/2)]
-                temp_sorbate['oc']=[['sorbates_set'+str(2*j+1),[0.3,0.,0.5],'True'] for j in range(sorbate_N[i]/2)]
+                temp_sorbate['u']=[[Metal[i][j]+'_set'+str(2*j+1),[0.2,0.2,1.],'True'] for j in range(int(sorbate_N[i]/2))]+[['HO'+'_set'+str(2*j+1),[0.2,0.2,10.],'True'] for j in range(int(sorbate_N[i]/2))]
+                temp_sorbate['oc']=[['sorbates_set'+str(2*j+1),[0.3,0.,0.5],'True'] for j in range(int(sorbate_N[i]/2))]
                 #temp_sorbate['oc']=[[Metal[i][j]+'_set'+str(2*j+1),[0.3,0.,1.],'True'] for j in range(sorbate_N[i]/2)]+[['HO'+str(k+1)+'_set'+str(2*j+1),[0.3,0.,1.],'True'] for j in range(len(O_N[i])) for k in range(O_N[i][j])]
-                temp_sorbate['sorbate_number']=sorbate_N[i]/2
+                temp_sorbate['sorbate_number']=int(sorbate_N[i]/2)
                 temp_sorbate['oxygen_number']=O_N[i]
                 temp_sorbate['distal_wild']=add_distal_wild[i]
             temp_water={}
@@ -87,9 +87,9 @@ def make_structure(sorbate_N,O_N,water_N,Domains,Metal,binding_mode=['BD']*3,lon
                 temp_water=None
             else:
                 temp_water['dxdy']=[[0,-0.5,0.5,'True'] for j in range(water_N[i])]
-                temp_water['dz']=[[0,-0.5,0.5,'True'] for j in range(water_N[i]/2)]
-                temp_water['u']=[[3,0.8,10,'True'] for j in range(water_N[i]/2)]
-                temp_water['oc']=[[0.3,0,0.6,'True'] for j in range(water_N[i]/2)]
+                temp_water['dz']=[[0,-0.5,0.5,'True'] for j in range(int(water_N[i]/2))]
+                temp_water['u']=[[3,0.8,10,'True'] for j in range(int(water_N[i]/2))]
+                temp_water['oc']=[[0.3,0,0.6,'True'] for j in range(int(water_N[i]/2))]
             structure['domain'+str(i+1)]={'binding_mode':binding_mode[i],'full_layer_type':full_layer_type,'half_layer_type':half_layer_type,'domain_type':domain_type,'domain_tag':i+1,'surface':temp_surface,'sorbate':temp_sorbate,'water':temp_water}
         else:
             pass
@@ -109,7 +109,7 @@ def table_maker(table_file_path='D:\\table.tab',structure_info=structure,local_s
     for i in range(domain_N):
         f.write('rgh_domain'+str(i+1)+'.setWt\t1\tFalse\t0\t1\t-\n')
     f.write('\t0\tFalse\t0\t0\t-\n')
-    keys=structure_info.keys()
+    keys=list(structure_info.keys())
     keys.sort()
     for key in keys:
         temp_domain=structure_info[key]
@@ -138,7 +138,7 @@ def table_maker(table_file_path='D:\\table.tab',structure_info=structure,local_s
         ##do surface
         #out of plane movement together with inplane movement ie dxdydz
         f.write('#dxdydz\n')
-        for i in range(temp_surface['dz'][0]/2):
+        for i in range(int(temp_surface['dz'][0]/2)):
             index=2*i
             s="%s\t%5.4f\t%s\t%5.4f\t%5.4f\t%s\n"%('gp_'+atom_list[0][index].rsplit('_')[0]+atom_list[0][index+1].rsplit('_')[0]+'_'+atom_list[1][index].rsplit('_')[0]+atom_list[1][index+1].rsplit('_')[0]+'_D'+domain_tag+'.setdx',\
                                                       temp_surface['dxdy'][1][0],temp_surface['dxdy'][2],temp_surface['dxdy'][1][1],temp_surface['dxdy'][1][2],'-')
@@ -152,13 +152,13 @@ def table_maker(table_file_path='D:\\table.tab',structure_info=structure,local_s
         f.write('\t0\tFalse\t0\t0\t-\n')
         f.write('#oc and u\n')
         #occupancy and thermal factor
-        for i in range(temp_surface['u'][0]/2):
+        for i in range(int(temp_surface['u'][0]/2)):
             index=2*i
             s="%s\t%5.4f\t%s\t%5.4f\t%5.4f\t%s\n"%('gp_'+atom_list[0][index].rsplit('_')[0]+atom_list[0][index+1].rsplit('_')[0]+'_'+atom_list[1][index].rsplit('_')[0]+atom_list[1][index+1].rsplit('_')[0]+'_D'+domain_tag+'.setu',\
                                                   temp_surface['u'][1][0],temp_surface['u'][2],temp_surface['u'][1][1],temp_surface['u'][1][2],'-')
             f.write(s)
         f.write('\t0\tFalse\t0\t0\t-\n')
-        for i in range(temp_surface['oc'][0]/2):
+        for i in range(int(temp_surface['oc'][0]/2)):
             index=2*i
             s="%s\t%5.4f\t%s\t%5.4f\t%5.4f\t%s\n"%('gp_'+atom_list[0][index].rsplit('_')[0]+atom_list[0][index+1].rsplit('_')[0]+'_'+atom_list[1][index].rsplit('_')[0]+atom_list[1][index+1].rsplit('_')[0]+'_D'+domain_tag+'.setoc',\
                                                   temp_surface['oc'][1][0],temp_surface['oc'][2],temp_surface['oc'][1][1],temp_surface['oc'][1][2],'-')
@@ -306,7 +306,7 @@ def table_maker(table_file_path='D:\\table.tab',structure_info=structure,local_s
                 s_u="%s\t%5.4f\t%s\t%5.4f\t%5.4f\t%s\n"%('gp_waters_set'+str(i+1)+'_D'+domain_tag+'.setu',temp_water['u'][i][0],temp_water['u'][i][-1],temp_water['u'][i][1],temp_water['u'][i][2],'-')
                 f.write(s_u)
             #f.write('\t0\tFalse\t0\t0\t-\n')
-            for i in range(len(temp_water['dxdy'])/2):
+            for i in range(int(len(temp_water['dxdy'])/2)):
                 s_u="%s\t%5.4f\t%s\t%5.4f\t%5.4f\t%s\n"%('gp_waters_set'+str(i+1)+'_D'+domain_tag+'.setdy',temp_water['dxdy'][i][0],temp_water['dxdy'][i][-1],temp_water['dxdy'][i][1],temp_water['dxdy'][i][2],'-')
                 f.write(s_u)
             f.write('\t0\tFalse\t0\t0\t-\n')

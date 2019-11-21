@@ -165,13 +165,13 @@ class steric_check(trigonal_pyramid_two_point):
                                 self.container[:,6],self.container[:,7],\
                                 self.container[:,8]],names='phi,top,low,A1,A2,A3,P1,P2,P3')
         data.sort(order=('phi','top','low'))
-        print "phi,top_angle,low_dt_limit,P1_x,P1_y,P1_z,P2_x,P2_y,P3_z"
+        print("phi,top_angle,low_dt_limit,P1_x,P1_y,P1_z,P2_x,P2_y,P3_z")
         if print_path!=None:
             np.savetxt(print_path,data,"%5.3f")
-            print np.loadtxt(print_path)
+            print(np.loadtxt(print_path))
         else:
             np.savetxt('test',data,"%5.3f")
-            print np.loadtxt('test')
+            print(np.loadtxt('test'))
             os.remove('test')
             
 class trigonal_pyramid_three_point():

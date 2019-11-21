@@ -331,7 +331,7 @@ def steric_check_for_dimmer(file_xyz='D://temp_steric.xyz',sorbate=np.array([[0.
                 if each_distance<3.0:
                     new_distance_list.append(each_distance)
             steric_feasibility_container[angle]=new_distance_list
-            print angle,new_distance_list
+            print(angle,new_distance_list)
 
     return steric_feasibility_container
 
@@ -345,4 +345,4 @@ if __name__=='__main__':
     test1=tetrahedra_3.share_edge(edge=np.array([[0.,0.,0.],[5.,5.,5.]]))
     test1.cal_p2(theta=0,phi=np.pi/2)
     test1.share_face_init()
-    print test1.face,test1.p3,test1.center_point
+    print(test1.face,test1.p3,test1.center_point)

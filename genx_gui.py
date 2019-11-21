@@ -28,7 +28,7 @@ _path = os.getcwd()
 _path, _file = os.path.split(__file__)
 if _path[-4:] == '.zip':
     _path, ending = os.path.split(_path)
-print _path
+print(_path)
 #make geometry folder in the system path
 #sys.path.append('//'.join(_path.rsplit('\\')+['geometry_modules']))
 if _path != '':
@@ -36,27 +36,27 @@ if _path != '':
 #raise Exception(_path)
 class MainFrame(wx.Frame):
     def __init__(self, show_startup, *args, **kwds):
-        
+
         self.config = io.Config()
-        
+
         #print _path
         #if _path != '':
         #    self.config.load_default(_path + '/genx.conf')
         #else:
         #    self.config.load_default('./genx.conf')
         self.config.load_default(_path + 'genx.conf')
-        
+
         status_text = lambda event:event_handlers.status_text(self, event)
-        
+
         # begin wxGlade: MainFrame.__init__
         kwds["style"] = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.MAXIMIZE|wx.MAXIMIZE_BOX|wx.SYSTEM_MENU|wx.RESIZE_BORDER
         wx.Frame.__init__(self, *args, **kwds)
-        
+
         #self.config.load_default('./genx.conf')
         if show_startup:
             self.startup_dialog(_path)
-        
-        
+
+
         self.ver_splitter = wx.SplitterWindow(self, -1, style=wx.SP_3D|wx.SP_BORDER)
         self.main_panel = wx.Panel(self.ver_splitter, -1)
         self.hor_splitter = wx.SplitterWindow(self.main_panel, -1, style=wx.SP_3D|wx.SP_BORDER)
@@ -74,7 +74,7 @@ class MainFrame(wx.Frame):
         self.data_notebook = wx.Notebook(self.data_panel, -1, style=wx.NB_BOTTOM)
         self.data_notebook_pane_2 = wx.Panel(self.data_notebook, -1)
         self.data_notebook_data = wx.Panel(self.data_notebook, -1)
-        
+
         # Menu Bar
         self.main_frame_menubar = wx.MenuBar()
         self.mb_file = wx.Menu()
@@ -214,7 +214,7 @@ class MainFrame(wx.Frame):
         self.SetMenuBar(self.main_frame_menubar)
         # Menu Bar end
         self.main_frame_statusbar = self.CreateStatusBar(3, 0)
-        
+
         # Tool Bar
         self.main_frame_toolbar = wx.ToolBar(self, -1, style=wx.TB_HORIZONTAL|wx.TB_FLAT)
         self.SetToolBar(self.main_frame_toolbar)
@@ -240,7 +240,7 @@ class MainFrame(wx.Frame):
         self.paramter_grid = parametergrid.ParameterGrid(self.input_notebook_grid, self, )
         self.script_editor = wx.py.editwindow.EditWindow(self.input_notebook_script, -1)
         self.example_handler = help.ExampleHandler(self, self.mb_examples, _path + 'examples/')
-        
+
         self.__set_properties()
         self.__do_layout()
 
@@ -306,9 +306,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CHOICE, self.eh_data_grid_choice, self.data_grid_choice)
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.eh_plot_page_changed, self.plot_notebook)
         # end wxGlade
-        
+
         #### Begin Manual Config
-        
+
         # Create objects needed
         # Set the style on the toolbar to
         # style=wx.TB_HORIZONTAL|wx.TB_FLAT
@@ -320,14 +320,14 @@ class MainFrame(wx.Frame):
         ##self.main_frame_fom_text.SetEditable(False)
         #self.main_frame_toolbar.AddSeparator()
         #self.main_frame_toolbar.AddControl(self.main_frame_fom_text)
-        
-        
+
+
         self.model = model.Model(config = self.config)
         self.solver_control = solvergui.SolverController(self, self.config)
-    
+
         self.plugin_control = \
                 add_on.PluginController(self, mb_set_plugins, self.config)
-        
+
         # Bind all the events that are needed to occur when a new model has
         # been loaded
         # Update the parameter grid
@@ -347,7 +347,7 @@ class MainFrame(wx.Frame):
         self.Bind(datalist.EVT_DATA_LIST,\
             self.eh_external_update_data,\
             self.data_list.list_ctrl)
-        
+
         self.Bind(event_handlers.EVT_SIM_PLOT, self.plot_data.OnSimPlotEvent,\
                     self)
         self.Bind(event_handlers.EVT_SIM_PLOT, self.eh_external_fom_value,\
@@ -356,7 +356,7 @@ class MainFrame(wx.Frame):
         self.Bind(solvergui.EVT_UPDATE_PLOT, self.eh_external_fom_value)
         self.Bind(solvergui.EVT_UPDATE_PLOT, self.plot_data.OnSolverPlotEvent)
         self.Bind(solvergui.EVT_UPDATE_PLOT, self.plot_fom.OnSolverPlotEvent)
-        
+
         self.Bind(solvergui.EVT_SOLVER_UPDATE_TEXT, \
                             self.eh_ex_status_text)
         self.Bind(solvergui.EVT_UPDATE_PARAMETERS,\
@@ -373,7 +373,7 @@ class MainFrame(wx.Frame):
         self.plot_fomscan.SetCallbackWindow(self)
         self.Bind(plotpanel.EVT_PLOT_SETTINGS_CHANGE,\
                     self.eh_ex_plot_settings_changed)
-                    
+
         # Binding events which means model changes
         self.Bind(parametergrid.EVT_PARAMETER_GRID_CHANGE,\
             self.eh_external_model_changed)
@@ -395,25 +395,25 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_FIND_REPLACE, self.eh_external_find)
         self.Bind(wx.EVT_FIND_REPLACE_ALL, self.eh_external_find)
         self.Bind(wx.EVT_FIND_CLOSE, self.eh_external_find)
-        
-                    
+
+
         # Adding close event so I can take care of it...
         self.Bind(wx.EVT_CLOSE, self.eh_mb_quit)
-        
+
         proj_func = lambda row: event_handlers.project_fom_parameter(self, row)
         scan_func = lambda row: event_handlers.scan_parameter(self, row)
         self.paramter_grid.SetFOMFunctions(proj_func, scan_func)
-        
+
         # Initiializations..
         # To force an update of the menubar...
         self.plot_data.SetZoom(False)
 
         self.model.saved = True
         #### End Manual config
-        
+
     def __set_properties(self):
         self.main_frame_toolbar.SetToolBitmapSize((32,32))
-        
+
         self.main_frame_fom_text = wx.StaticText(self.main_frame_toolbar, -1,\
             '        FOM:                    ', size = (400, -1))
         font = wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.NORMAL)
@@ -422,7 +422,7 @@ class MainFrame(wx.Frame):
         #self.main_frame_fom_text.SetEditable(False)
         self.main_frame_toolbar.AddSeparator()
         self.main_frame_toolbar.AddControl(self.main_frame_fom_text)
-        
+
         # begin wxGlade: MainFrame.__set_properties
         self.SetTitle("GenX")
         _icon = wx.EmptyIcon()
@@ -451,7 +451,7 @@ class MainFrame(wx.Frame):
         self.script_editor.setDisplayLineNumbers(True)
         self.ver_splitter.SetMinimumPaneSize(1)
         self.hor_splitter.SetMinimumPaneSize(1)
-        
+
 
     def __do_layout(self):
         # begin wxGlade: MainFrame.__do_layout
@@ -515,7 +515,7 @@ class MainFrame(wx.Frame):
         self.Layout()
         self.Centre()
         # end wxGlade
-        
+
 
     def Show(self):
         ''' Overiding the default method since any resizing has to come AFTER
@@ -541,7 +541,7 @@ class MainFrame(wx.Frame):
         #self.Maximize()
         ## End Manual Config
         event_handlers.new(self, None)
-        
+
     def startup_dialog(self, profile_path, force_show = False):
         show_profiles = self.config.get_boolean('startup', 'show profiles')
         if show_profiles  or force_show:
@@ -552,12 +552,12 @@ class MainFrame(wx.Frame):
                 shutil.copyfile(profile_path + 'profiles/' + config_file, profile_path + 'genx.conf')
                 #print profile_path + 'genx.conf'
                 self.config.load_default(profile_path + 'genx.conf')
-                self.config.default_set('startup', 'show profiles', 
+                self.config.default_set('startup', 'show profiles',
                                          startup_dialog.GetShowAtStartup())
                 self.config.write_default(profile_path + 'genx.conf')
             #print self.config.get('plugins','loaded plugins')
 
-            
+
     def eh_mb_new(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.new(self, event)
 
@@ -565,7 +565,7 @@ class MainFrame(wx.Frame):
         #print "Event handler `eh_mb_open' not implemented"
         #event.Skip()
         event_handlers.open(self, event)
-        
+
     def eh_mb_save(self, event): # wxGlade: MainFrame.<event_handler>
         #print "Event handler `eh_mb_save' not implemented"
         #event.Skip()
@@ -573,14 +573,14 @@ class MainFrame(wx.Frame):
 
     def eh_mb_print_plot(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.print_plot(self, event)
-        
+
 
     def eh_mb_print_grid(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.print_parameter_grid(self, event)
-        
+
 
     def eh_mb_print_script(self, event): # wxGlade: MainFrame.<event_handler>
-        print "Event handler `eh_mb_print_script' not implemented"
+        print("Event handler `eh_mb_print_script' not implemented")
         event.Skip()
 
     def eh_mb_export_data(self, event): # wxGlade: MainFrame.<event_handler>
@@ -598,7 +598,7 @@ class MainFrame(wx.Frame):
     def eh_mb_copy_graph(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.copy_graph(self, event)
         #event.Skip()
-        
+
     def eh_mb_copy_sim(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.copy_sim(self, event)
         #event.Skip()
@@ -622,7 +622,7 @@ class MainFrame(wx.Frame):
         event_handlers.resume_fit(self, event)
 
     def eh_mb_fit_analyze(self, event): # wxGlade: MainFrame.<event_handler>
-        print "Event handler `eh_mb_fit_analyze' not implemented"
+        print("Event handler `eh_mb_fit_analyze' not implemented")
         event.Skip()
 
     def eh_mb_misc_showman(self, event): # wxGlade: MainFrame.<event_handler>
@@ -664,23 +664,23 @@ class MainFrame(wx.Frame):
     def eh_tb_zoom(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.on_zoom_check(self, event)
         #event.Skip()
-        
+
     def eh_new_model(self, event):
         event_handlers.on_new_model(self, event)
         event.Skip
-        
+
     def eh_mb_saveas(self, event): # wxGlade: MainFrame.<event_handler>
         # event.Skip()
         event_handlers.save_as(self, event)
-        
-    def eh_ex_status_text(self, event): 
+
+    def eh_ex_status_text(self, event):
         # event.Skip()
         event_handlers.status_text(self, event)
-        
-    def eh_ex_point_pick(self, event): 
+
+    def eh_ex_point_pick(self, event):
         # event.Skip()
         event_handlers.point_pick(self, event)
-        
+
     def eh_ex_plot_settings_changed(self, event):
         event_handlers.plot_settings_changed(self, event)
         event.Skip()
@@ -721,18 +721,18 @@ class MainFrame(wx.Frame):
 
     def eh_mb_import_script(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.import_script(self, event)
-        
+
     def eh_external_fom_value(self, event):
         event_handlers.fom_value(self, event)
         event.Skip()
-        
+
     def eh_mb_set_dal(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.on_data_loader_settings(self, event)
-        
+
     def eh_external_update_data_grid_choice(self, event):
         event_handlers.update_data_grid_choice(self, event)
         event.Skip()
-        
+
     def eh_external_update_data(self, event):
         event_handlers.update_data(self, event)
         event.Skip()
@@ -760,7 +760,7 @@ class MainFrame(wx.Frame):
 
     def eh_data_toggle_error(self, event): # wxGlade: MainFrame.<event_handler>
         self.data_list.list_ctrl.OnUseError(event)
-        
+
     def eh_data_calc(self, event): # wxGlade: MainFrame.<event_handler>
         self.data_list.list_ctrl.OnCalcEdit(event)
 
@@ -772,11 +772,11 @@ class MainFrame(wx.Frame):
 
     def eh_mb_models_help(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.models_help(self, event)
-    
+
     def eh_external_model_changed(self, event):
         event_handlers.models_changed(self, event)
         event.Skip()
-    
+
     def eh_mb_plugins_help(self, event): # wxGlade: MainFrame.<event_handler>
         event_handlers.plugins_help(self, event)
 
@@ -797,12 +797,12 @@ class MainFrame(wx.Frame):
     def eh_mb_view_use_toggle_show(self, event):
         new_val = self.mb_use_toggle_show.IsChecked()
         self.data_list.list_ctrl.SetShowToggle(new_val)
-    
+
     def eh_mb_misc_openhomepage(self, event): # wxGlade: MainFrame.<event_handler>
         #print "Event handler `eh_mb_misc_openhomepage' not implemented"
         #event.Skip()
         event_handlers.show_homepage(self, event)
-        
+
     def eh_show_startup_dialog(self, event):
         self.startup_dialog(_path, force_show = True)
 
@@ -815,7 +815,7 @@ class MyApp(wx.App):
         wx.App.__init__(self, *args, **kwargs)
     def OnInit(self):
         wx.InitAllImageHandlers()
-        
+
         main_frame = MainFrame(self.show_startup, None, -1, "")
         self.SetTopWindow(main_frame)
         main_frame.Show()
@@ -826,20 +826,20 @@ class MyApp(wx.App):
 class StartUpConfigDialog(wx.Dialog):
     def __init__(self, parent, config_folder, show_cb = True):
         wx.Dialog.__init__(self, parent, -1, 'Change Startup Configuration')
-        
+
         self.config_folder = config_folder
         self.selected_config = None
-        
+
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((-1, 10), 0, wx.EXPAND)
-        
+
         sizer.Add(wx.StaticText(self, label='Choose the profile you want GenX to use:            '),
                   0, wx.ALIGN_LEFT, 5)
         self.profiles = self.get_possible_configs()
         self.config_list = wx.ListBox(self, size = (-1, 200), choices = self.profiles, style = wx.LB_SINGLE)
         self.config_list.SetSelection(self.profiles.index('Default'))
         sizer.Add(self.config_list, 1, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, 5)
-        
+
         startup_cb = wx.CheckBox(self, -1, "Show at startup", style=wx.ALIGN_LEFT)
         startup_cb.SetValue(show_cb)
         self.startup_cb = startup_cb
@@ -848,14 +848,14 @@ class StartUpConfigDialog(wx.Dialog):
         sizer.Add((-1, 4), 0, wx.EXPAND)
         sizer.Add(wx.StaticText(self, label='These settings can be changed at the menu:\n Options/Startup Profile'),
                   0, wx.ALIGN_LEFT, 5)
-        
-        
-        
+
+
+
         # Add the Dilaog buttons
         button_sizer = wx.StdDialogButtonSizer()
         okay_button = wx.Button(self, wx.ID_OK)
         okay_button.SetDefault()
-        button_sizer.AddButton(okay_button) 
+        button_sizer.AddButton(okay_button)
         button_sizer.AddButton(wx.Button(self, wx.ID_CANCEL))
         button_sizer.Realize()
         # Add some eventhandlers
@@ -863,47 +863,47 @@ class StartUpConfigDialog(wx.Dialog):
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
         sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, 20)
-        
+
         sizer.Add((-1, 4), 0, wx.EXPAND)
         sizer.Add(button_sizer,0,\
                 flag = wx.ALIGN_RIGHT, border = 20)
         sizer.Add((-1, 4), 0, wx.EXPAND)
-        
+
         main_sizer = wx.BoxSizer(wx.HORIZONTAL)
         main_sizer.Add((10,-1), 0, wx.EXPAND)
         main_sizer.Add(sizer, 1, wx.EXPAND)
         main_sizer.Add((10,-1), 0, wx.EXPAND)
         self.SetSizer(main_sizer)
-        
+
         sizer.Fit(self)
         self.Layout()
         self.CentreOnScreen()
-        
-        
+
+
     def OnClickOkay(self, event):
         self.selected_config = self.profiles[self.config_list.GetSelection()]
         self.show_at_startup = self.startup_cb.GetValue()
         event.Skip()
-        
+
     def GetConfigFile(self):
         if self.selected_config:
             return self.selected_config + '.conf'
         else:
             return None
-    
+
     def GetShowAtStartup(self):
         return self.show_at_startup
-    
+
     def get_possible_configs(self):
         '''get_possible_configs(self) --> list of strings
-        
-        search the plugin directory. 
-        Checks the list for python scripts and returns a list of 
+
+        search the plugin directory.
+        Checks the list for python scripts and returns a list of
         module names that are loadable .
         '''
         # Locate all python files in this files directory
         # but excluding this file and not loaded.
-        plugins = [s[:-5] for s in os.listdir(self.config_folder) if '.conf' == s[-5:] 
+        plugins = [s[:-5] for s in os.listdir(self.config_folder) if '.conf' == s[-5:]
                         and s[:2] != '__']
         return plugins
 

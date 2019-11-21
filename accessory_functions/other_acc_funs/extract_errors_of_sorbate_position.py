@@ -6,7 +6,7 @@ import numpy as np
 import model,diffev
 import filehandling as io
 
-#this small script is used to extract dxdydz errors of sorbate atoms based on scanning geometrical parameters with the error range from the best fit model file.
+#This small script is used to extract dxdydz errors of sorbate atoms based on scanning geometrical parameters with the error range from the best fit model file.
 #To make it run faster, switch off the bond valence check (USE_BV=0). And switch off all I/O functions (running_mode=1)
 #so far it can deal with 4 parameters at most.
 path='P://temp_model'
@@ -67,7 +67,7 @@ def extract_value(domain_module,ids=[''],tags=['x'],monitor_values={}):
             elif (current_temp-current_values[0])<0 and (abs_diff>current_values[1]):
                 monitor_values[id][tag][1]=-abs_diff
     return monitor_values
-    
+
 def _formate_values(value,errors):
     import math,decimal
     #eg value='1.245',errors=[-0.1,0.2], will return 1.2(2)
@@ -94,14 +94,13 @@ def _formate_values(value,errors):
         pass
     if decimal_place>0 and error_tag==10:
         error_tag=9
-    
     if decimal_place==0:
         if value<1:
             return '%i(%i)'%(1,error_tag)
         else:
             return '%2.1f(%i)'%(value,error_tag)
     return '{0:2.{1}f}({2})'.format(value,decimal_place,error_tag)
-    
+
 i_accum=0
 if len(scan_pars_list)==1:
     for i in range(scan_number):
@@ -166,4 +165,3 @@ for i in range(len(monitor_variables)):
     for j in range(len(monitor_pars)):
         temp=best_monitor_pars_values[monitor_variables[i]][monitor_pars[j]]
         print monitor_variables[i],monitor_pars[j],_formate_values(temp[0],temp[1:])
-

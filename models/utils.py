@@ -74,7 +74,7 @@ Same thing as bc but scaled so that is can be used with a density
 in g/cm<sup>3<sup>.
 '''
 import numpy as np
-import lib.scatteringlengths as sl
+from .lib import scatteringlengths as sl
 import os
 
 _head, _tail = os.path.split(__file__)
@@ -153,7 +153,7 @@ if __name__=='__main__':
     #print 'f.fe(0)', f.fe(0)
     #print 'f.fe2p(0)', f.fe2p(0)
     fe = np.array(__f_chantler_dict__['fe'])
-    print fe.reshape(len(fe)/7, 7)
+    print(fe.reshape(len(fe)/7, 7))
     #print bc.fe
-    print fpc.Sn
-    print fp.Sn
+    print(fpc.Sn)
+    print(fp.Sn)

@@ -142,7 +142,7 @@ AtomGroup was changed to consider moving atoms on symmetrical basis
 #take away the argument of sym_file in the Atom_group, each time you add a new group member, you must specify the matrix list to define the symmetry relationship
 
 import numpy as np
-from utils import f, rho
+from .utils import f, rho
 import time,os
 import pickle,copy
 
@@ -150,7 +150,7 @@ try:
     from scipy import weave
     _turbo_sim = True
 except:
-    print 'Info: Could not import weave, turbo off'
+    print('Info: Could not import weave, turbo off')
     _turb_sim = False
 
 __pars__ = ['Sample', 'UnitCell', 'Slab', 'AtomGroup', 'Instrument']
@@ -1436,11 +1436,11 @@ class Sample:
             A[each_key]=A_container
             P[each_key]=P_container
         if print_AP:
-            print "l list=",l
+            print("l list=",l)
             for each_key in keys_domainA:
-                print '\n',each_key
-                print "A list=",['%.4f' % each_A for each_A in A[each_key]]
-                print "P list=",['%.4f' % each_P for each_P in P[each_key]]
+                print('\n',each_key)
+                print("A list=",['%.4f' % each_A for each_A in A[each_key]])
+                print("P list=",['%.4f' % each_P for each_P in P[each_key]])
         return l,A,P
 
     #calculate the Fourier components
@@ -2689,6 +2689,7 @@ class Slab:
         '''Returns a copy of the object.
         '''
         #T_factor must be 'u', not matter what's that for the original one, since they have been transfered to u already.
+        self.id = list(self.id)
         cpy = Slab(c = self.c, slab_oc = self.slab_oc,T_factor=self.T_factor)
         for i in range(len(self.id)):
             cpy.add_atom(str(self.id[i]), str(self.el[i]),
@@ -3053,6 +3054,12 @@ class AtomGroup:
                     funcs[i][2](val*self.sym[i][5])
                     #i,'dy',val
                 elif par=='dz':
+                    # try:
+                        # print(self.ids[i])
+                        # print(dir(self))
+                        # print(list(val))
+                    # except:
+                        # pass
                     funcs[i][0](val*self.sym[i][6])
                     funcs[i][1](val*self.sym[i][7])
                     funcs[i][2](val*self.sym[i][8])
@@ -3394,7 +3401,7 @@ def scale_sim(data, sim_list, scale_func = None):
     denominator = sum([(sim_list[i]**2).sum() for i in range(len(data))
                  if data[i].use])
     scale = numerator/denominator
-    print scale
+    print(scale)
     scaled_sim_list = [sim*scale for sim in sim_list]
     if not scale_func == None:
         scale_func(scale)
@@ -3529,7 +3536,7 @@ if __name__ == '__main__':
 
         def updata_oxygen_pair(self,domain,ids,ref_point,r,alpha):
             #updata the position information of oxygen pair, to be dropped inside sim func
-            print 'sensor',np.where(domain.id==ids[0]),np.where(domain.id==ids[0])[0]
+            print('sensor',np.where(domain.id==ids[0]),np.where(domain.id==ids[0])[0])
             index_1=np.where(domain.id==ids[0])[0][0]
             index_2=np.where(domain.id==ids[1])[0][0]
             x_shift=r*np.cos(alpha)

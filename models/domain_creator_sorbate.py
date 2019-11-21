@@ -61,7 +61,7 @@ def extract_component(domain,id,name_list):
     index=np.where(domain.id==id)[0][0]
     temp=[vars(domain)[name][index] for name in name_list]
     for i in range(len(name_list)):
-        print name_list[i]+'=',temp[i]
+        print(name_list[i]+'=',temp[i])
         
 #set coor to atom with id in domain
 def set_coor(domain,id,coor):
@@ -1258,9 +1258,9 @@ class domain_creator_sorbate():
         n_v_1=np.cross(p1-p0,sorbate-p0)
         n_v_2=np.cross(p1-p0,ref-p0)
         rotation_angle=np.pi-np.arccos(np.dot(n_v_1,n_v_2)/f2(np.array([0,0,0]),n_v_1)/f2(np.array([0,0,0]),n_v_2))
-        print "edge_offset=",edge_offset,'A'
-        print "top_angle_offset=",top_angle_before_offset*180/np.pi-109.47," degree"
-        print "rotation angle=",rotation_angle*180/np.pi
+        print("edge_offset=",edge_offset,'A')
+        print("top_angle_offset=",top_angle_before_offset*180/np.pi-109.47," degree")
+        print("rotation angle=",rotation_angle*180/np.pi)
         return edge_offset,top_angle_before_offset*180/np.pi-109.47,rotation_angle*180/np.pi
 
     def adding_sorbate_bidentate_octahedral(self,domain,phi=0,flag='off_center',attach_atm_ids=[],offset=[None,None],sb_id='sb1',sorbate_el='Sb',O_id=['HO1','HO2','HO3','HO4'],anchor_ref=None,anchor_offset=None,basis=np.array([5.038,5.434,7.3707]),T=None,T_INV=None):

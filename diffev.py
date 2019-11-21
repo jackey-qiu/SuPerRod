@@ -9,7 +9,7 @@ try:
 except:
     MPI_RUN=False
 from numpy import *
-import thread
+import _thread as thread
 import time
 import random as random_mod
 import sys, os, pickle
@@ -237,7 +237,7 @@ class DiffEv:
 
         Loads the pickled string into the this object. See pickle_string.
         '''
-        self.safe_copy(pickle.loads(pickled_string))
+        self.safe_copy(pickle.loads(pickled_string,encoding='latin1'))
 
 
     def reset(self):
@@ -490,6 +490,7 @@ class DiffEv:
                 # Create the vectors who will be compared to the
                 # population vectors
                 [self.create_trial(index) for index in range(self.n_pop)]
+                #print(self.trial_vec[0])
                 self.eval_fom()
                 # Calculate the fom of the trial vectors and update the population
                 [self.update_pop(index) for index in range(self.n_pop)]
@@ -500,7 +501,6 @@ class DiffEv:
                         for vec in self.trial_vec]
                 #self.fom_evals = append(self.fom_evals, self.trial_fom)
                 [self.fom_evals.append(vec) for vec in self.trial_fom]
-
                 # Add the best value to the fom log
                 self.fom_log = r_[self.fom_log,\
                                     [[len(self.fom_log),self.best_fom]]]
@@ -679,7 +679,9 @@ class DiffEv:
         '''
 
         # Set the parameter values
-        map(lambda func, value:func(value), self.par_funcs, vec)
+        #map(lambda func, value:func(value), self.par_funcs, vec)
+        for fun,each_vec in zip(self.par_funcs,vec):
+            fun(each_vec)
         fom = self.model.evaluate_fit_func()
         self.n_fom += 1
         return fom
@@ -696,7 +698,11 @@ class DiffEv:
         parameters in vec.
         '''
         # Set the paraemter values
-        map(lambda func, value:func(value), self.par_funcs, vec)
+        #for each in self.par_funcs:
+        #    print(each.__name__)
+        #map(lambda func, value:func(value), self.par_funcs, vec)
+        for fun, each_vec in zip(self.par_funcs,vec):
+            fun(each_vec)
 
         self.model.evaluate_sim_func()
         return self.model.fom
@@ -824,13 +830,13 @@ class DiffEv:
              generation with a fracitonal step given by simple_step
              on the best indivual as well a random fraction of simplex_n individuals.
         '''
-        print 'Inits new generation'
+        print('Inits new generation')
         if gen%self.simplex_interval == 0:
             spread = array(self.trial_vec).max(0) - array(self.trial_vec).min(0)
             simp = Simplex(self.calc_fom, self.best_vec, spread*self.simplex_step)
-            print 'Starting simplex run for best vec'
+            print('Starting simplex run for best vec')
             new_vec, err, iter = simp.minimize(epsilon = self.best_fom/self.simplex_rel_epsilon, maxiters = self.simplex_max_iter)
-            print 'FOM improvement: ', self.best_fom - err
+            print('FOM improvement: ', self.best_fom - err)
 
             if self.use_boundaries:
                 # Check so that the parameters lie indside the bounds
@@ -850,7 +856,7 @@ class DiffEv:
             # Apply the simplex to a simplex_n memebers (0-1)
             for index1 in random_mod.sample(xrange(len(self.pop_vec)),
                                    int(len(self.pop_vec)*self.simplex_n)):
-                print 'Starting simplex run for member: ', index1
+                print('Starting simplex run for member: ', index1)
                 mem = self.pop_vec[index1]
                 mem_fom = self.fom_vec[index1]
                 simp = Simplex(self.calc_fom, mem, spread*self.simplex_step)
@@ -876,7 +882,7 @@ class DiffEv:
              generation with a fracitonal step given by simple_step
              on the simplex_n*n_pop best individuals.
         '''
-        print 'Inits new generation'
+        print('Inits new generation')
         if gen%self.simplex_interval == 0:
             spread = array(self.trial_vec).max(0) - array(self.trial_vec).min(0)
 
@@ -937,7 +943,7 @@ class DiffEv:
         self.km_vec = abs(self.km + random.standard_cauchy(self.n_pop)*0.1)
         self.kr_vec = self.kr + random.normal(size = self.n_pop)*0.1
         #print self.km_vec, self.kr_vec
-        print 'km: ', self.km, ', kr: ', self.kr
+        print('km: ', self.km, ', kr: ', self.kr)
         #self.km_vec = (self.km_vec >= 1)*1 + (self.km_vec < 1)*self.km_vec
         self.km_vec = where(self.km_vec > 0, self.km_vec, 0)
         self.km_vec = where(self.km_vec < 1, self.km_vec, 1)
@@ -1015,7 +1021,6 @@ class DiffEv:
             # If not inside make a random re-initilazation of that parameter
             trial = where(ok, trial, random.rand(self.n_dim)*\
             (self.par_max - self.par_min) + self.par_min)
-
         self.trial_vec[index] = trial
         #return trial
 
@@ -1363,7 +1368,7 @@ def parallel_calc_fom(vec):
 
 #==============================================================================
 def default_text_output(text):
-    print text
+    print(text)
     sys.stdout.flush()
 
 def default_plot_output(solver):

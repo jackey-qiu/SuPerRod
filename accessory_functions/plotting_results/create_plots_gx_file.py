@@ -28,7 +28,7 @@ plot_e_FS=False                              ##plot electron density profiles ba
 plot_ctr=True                                                                        ##plot CTR results?##
 plot_raxr=False                                                                     ##plot RAXR results?##
 plot_AP_Q=False                                                               ##plot Foriour components?##
-gx_file_path='P:\\temp_model\\Best_Pb_anneal_rcut_run3_Jul19_ran.gx'                        ##where is your gx file##
+gx_file_path='/Users/cqiu/model_file/Good_clean_anneal_rcut_run2_Jul17_ran.gx'                        ##where is your gx file##
 ##########################################################################################################
 
 def local_func():
@@ -662,3 +662,4 @@ if __name__=="__main__":
     print('Plot files are dumpt to pocket!')
     print('Plot the results now!')
     plot_all(plot_e_model=plot_e_model,plot_e_FS=plot_e_FS,plot_ctr=plot_ctr,plot_raxr=plot_raxr,plot_AP_Q=plot_AP_Q)
+    pyplot.show()

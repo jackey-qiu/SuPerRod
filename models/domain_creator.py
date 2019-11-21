@@ -11,9 +11,9 @@ from numpy.linalg import inv
 from copy import deepcopy
 from random import uniform
 from geometry_modules import *
-from domain_creator_water import domain_creator_water
-from domain_creator_sorbate import domain_creator_sorbate
-from domain_creator_surface import domain_creator_surface
+from .domain_creator_water import domain_creator_water
+from .domain_creator_sorbate import domain_creator_sorbate
+from .domain_creator_surface import domain_creator_surface
 #from best_fit_par_from_genx_to_rod import lib_creator,from_tab_to_par
 
 """functions in this class
@@ -227,12 +227,12 @@ def output_errors(edge_length=2.7,top_angle=70,error_top_angle=1,error_theta=1,e
     sin_alpha_right=np.sin(np.deg2rad(top_anagle+error_top_angle)/2.)
     tan_alpha_left=np.tan(np.deg2rad(top_anagle-error_top_angle)/2.)
     tan_alpha_right=np.tan(np.deg2rad(top_anagle+error_top_angle)/2.)
-    print 'error of PbO1 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)+error_delta1
-    print 'error of pbO2 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)
-    print 'error of PbOdistal bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)++error_delta2
-    print 'error of O1PbO2 bond angle:',error_top_angle
-    print 'error of O1PbOdistal and O2PbOdistal bond angle:',error_top_angle+error_theta
-    print 'error of PbFe seperation:',edge_length/4.*(1./tan_alpha_left-1./tan_alpha_right)
+    print('error of PbO1 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)+error_delta1)
+    print('error of pbO2 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right))
+    print('error of PbOdistal bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)++error_delta2)
+    print('error of O1PbO2 bond angle:',error_top_angle)
+    print('error of O1PbOdistal and O2PbOdistal bond angle:',error_top_angle+error_theta)
+    print('error of PbFe seperation:',edge_length/4.*(1./tan_alpha_left-1./tan_alpha_right))
     return None
 
 #make dummy data set for test purpose, this function should be inside sim function
@@ -455,8 +455,8 @@ def link_atom_group(gp_info=[],gp_scheme=[]):
     for each_link in gp_scheme:
         group1=gp_info[each_link[0]]
         group2=gp_info[each_link[1]]
-        ref_group_name1=map(lambda x:x+group1['domain_tag'],group1['ref_group_names'])
-        ref_group_name2=map(lambda x:x+group2['domain_tag'],group2['ref_group_names'])
+        ref_group_name1=list(map(lambda x:x+group1['domain_tag'],group1['ref_group_names']))
+        ref_group_name2=list(map(lambda x:x+group2['domain_tag'],group2['ref_group_names']))
         for each_name in ref_group_name1:
             command_list.append(each_name+('.setdx(%s'%ref_group_name2[ref_group_name1.index(each_name)])+'.getdx())')
             command_list.append(each_name+('.setdy(%s'%ref_group_name2[ref_group_name1.index(each_name)])+'.getdy())')
@@ -470,9 +470,9 @@ def generate_sorbate_ids_original(domain,sorbate_layers,sorbate_el,number_sorbat
     id_names=[]
     for i in range(sorbate_layers):
         tag=[sorbate_el+str(i*2*number_sorbate_atom+1+j) for j in range(number_sorbate_atom*2)]
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag))])
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag)) and ('O' not in id)])
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag)) and ('O' in id)])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag)))])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag))) and ('O' not in id)])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag))) and ('O' in id)])
         id_names=id_names+['sorbate_set'+str(i+1)+'_D1',sorbate_el+'_set'+str(i+1)+'_D1','HO_set'+str(i+1)+'_D1']
     return id_container,id_names
 
@@ -483,11 +483,11 @@ def generate_sorbate_ids(domain,sorbate_layers,sorbate_el,number_sorbate_atom=1,
     if not symmetry:
         sym_scale=1
     for i in range(sorbate_layers):
-        tag=[sorbate_el+str(i*sym_scale*number_sorbate_atom+1+j) for j in range((number_sorbate_atom-len(level)*2)*sym_scale)]+map(lambda x:sorbate_el+str(x)+'rA',level)+map(lambda x:sorbate_el+str(x)+'rB',level)
+        tag=[sorbate_el+str(i*sym_scale*number_sorbate_atom+1+j) for j in range((number_sorbate_atom-len(level)*2)*sym_scale)]+list(map(lambda x:sorbate_el+str(x)+'rA',level))+list(map(lambda x:sorbate_el+str(x)+'rB',level))
 
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag))])
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag)) and ('O' not in id)])
-        id_container.append([id for id in domain.id if sum(map(lambda x:x in id,tag)) and ('O' in id)])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag)))])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag))) and ('O' not in id)])
+        id_container.append([id for id in domain.id if sum(list(map(lambda x:x in id,tag))) and ('O' in id)])
         id_names=id_names+['sorbate_set'+str(i+1)+'_D1',sorbate_el+'_set'+str(i+1)+'_D1','HO_set'+str(i+1)+'_D1']
     return id_container,id_names
 
@@ -657,12 +657,12 @@ def print_gaussian_vars(domain,el=None):
                     z_list.append(domain.z[i]+domain.dz1[i]+domain.dz2[i]+domain.dz3[i]+domain.dz4[i])
                     u_list.append(domain.u[i])
                     oc_list.append(domain.oc[i])
-    print 'U_RAXS_LIST=',list(np.around(u_list,decimals=3))
-    print 'OC_RAXS_LIST=',list(np.around(oc_list,decimals=3))
-    print 'X_RAXS_LIST=',list(np.around(x_list,decimals=3))
-    print 'Y_RAXS_LIST=',list(np.around(y_list,decimals=3))
-    print 'Z_RAXS_LIST=',list(np.around(z_list,decimals=3))
-    print 'el_freezed=',el_list
+    print('U_RAXS_LIST=',list(np.around(u_list,decimals=3)))
+    print('OC_RAXS_LIST=',list(np.around(oc_list,decimals=3)))
+    print('X_RAXS_LIST=',list(np.around(x_list,decimals=3)))
+    print('Y_RAXS_LIST=',list(np.around(y_list,decimals=3)))
+    print('Z_RAXS_LIST=',list(np.around(z_list,decimals=3)))
+    print('el_freezed=',el_list)
     return None
 
 def define_gaussian_vars(rgh,domain,shape='Flat',freeze_tag=False):
@@ -696,7 +696,7 @@ def define_gaussian_vars(rgh,domain,shape='Flat',freeze_tag=False):
 
 def update_gaussian(domain,rgh,groups,el='O',number=3,height_offset=0,c=20.1058,domain_tag='_D1',shape='Flat',print_items=False,use_cumsum=True,freeze_tag=False):
     if shape=='Flat':
-        items=map(lambda y:getattr(rgh,y)(),map(lambda x:'getGaussian_z_offset'+str(x+1), range(len(groups))))
+        items=list(map(lambda y:getattr(rgh,y)(),list(map(lambda x:'getGaussian_z_offset'+str(x+1), range(len(groups))))))
         gaussian_spacing=getattr(rgh,'getGaussian_Spacing')()
         gaussian_height=getattr(rgh,'getGaussian_Height')()
         add_gaussian(domain=domain,el=el,number=number,first_peak_height=gaussian_height,spacing=gaussian_spacing,height_offset=height_offset,c=c,domain_tag=domain_tag,shape=shape,freeze_tag=freeze_tag)
@@ -705,7 +705,7 @@ def update_gaussian(domain,rgh,groups,el='O',number=3,height_offset=0,c=20.1058,
         for i in range(len(groups)):
             getattr(groups[i],'setdz')(items[i])
         if print_items:
-            print items
+            print(items)
     elif shape=='Single_Gaussian':
         gaussian_rms=getattr(rgh,'getGaussian_RMS')()
         gaussian_occ=getattr(rgh,'getGaussian_OCC')()
@@ -1126,7 +1126,7 @@ def extract_coor_offset(domain,id=['id1','id2'],offset=[],basis=[5.038,5.434,7.3
     return f2(coors_offset[0]*basis,coors_offset[1]*basis)
 
 def layer_spacing_calculator(domain,layer_N,half_layer):
-    print "bulk structure (A), fit structure (A), percentage of change in fit"
+    print("bulk structure (A), fit structure (A), percentage of change in fit")
     layer_index=range(layer_N)
     z_org=[]
     z_fit=[]
@@ -1136,7 +1136,7 @@ def layer_spacing_calculator(domain,layer_N,half_layer):
         z_org.append(domain.z[i*2]*7.3707)
         z_fit.append((domain.z[i*2]+domain.dz1[i*2]+domain.dz2[i*2]+domain.dz3[i*2])*7.3707)
     for j in range(len(z_org)-1):
-        print z_org[j]-z_org[j+1],z_fit[j]-z_fit[j+1],((z_fit[j]-z_fit[j+1])-(z_org[j]-z_org[j+1]))/(z_org[j]-z_org[j+1])
+        print(z_org[j]-z_org[j+1],z_fit[j]-z_fit[j+1],((z_fit[j]-z_fit[j+1])-(z_org[j]-z_org[j+1]))/(z_org[j]-z_org[j+1]))
     return True
 
 def extract_coor2(domain,id):
@@ -1150,7 +1150,7 @@ def extract_component(domain,id,name_list):
     index=np.where(domain.id==id)[0][0]
     temp=[vars(domain)[name][index] for name in name_list]
     for i in range(len(name_list)):
-        print name_list[i]+'=',temp[i]
+        print(name_list[i]+'=',temp[i])
 
 #set coor to atom with id in domain
 def set_coor(domain,id,coor):
@@ -2576,8 +2576,8 @@ class domain_creator(domain_creator_water,domain_creator_sorbate,domain_creator_
         for id in self.id_list[:(self.terminated_layer+self.N_layers)*2]:
             #print id in new_domain_B.id
             new_domain_B.del_atom(id)
-        new_domain_A.id=map(lambda x:x+self.domain_tag+'A',new_domain_A.id)
-        new_domain_B.id=map(lambda x:x+self.domain_tag+'B',new_domain_B.id)
+        new_domain_A.id=list(list(map(lambda x:x+self.domain_tag+'A',new_domain_A.id)))
+        new_domain_B.id=list(list(map(lambda x:x+self.domain_tag+'B',new_domain_B.id)))
         return new_domain_A.copy(),new_domain_B.copy()
 
     def create_equivalent_domains_3(self):
@@ -2595,8 +2595,8 @@ class domain_creator(domain_creator_water,domain_creator_sorbate,domain_creator_
                 temp_ids.append(new_domain_B.id[i])
         for id in temp_ids:new_domain_B.del_atom(id)
         new_domain_B.id=new_domain_A.id[10:]
-        new_domain_A.id=map(lambda x:x+self.domain_tag+'A',new_domain_A.id)
-        new_domain_B.id=map(lambda x:x+self.domain_tag+'B',new_domain_B.id)
+        new_domain_A.id=list(map(lambda x:x+self.domain_tag+'A',new_domain_A.id))
+        new_domain_B.id=list(map(lambda x:x+self.domain_tag+'B',new_domain_B.id))
         return new_domain_A.copy(),new_domain_B.copy()
 
     def _extract_list(self,ref_list,extract_index):
@@ -2786,9 +2786,9 @@ class domain_creator(domain_creator_water,domain_creator_sorbate,domain_creator_
         for i in range(len(domain.id)):
             if (f2(f1(domain,index),f1(domain,i))<=searching_range)&(f2(f1(domain,index),f1(domain,i))!=0.):
                 neighbor_container[domain.id[i]]=f2(f1(domain,index),f1(domain,i))
-        print "neighbors of ",id," is as following:"
+        print("neighbors of ",id," is as following:")
         for key in neighbor_container.keys():
-            print key,neighbor_container[key]
+            print(key,neighbor_container[key])
         return None
 
     def create_match_lib(self,domain,id_list):
@@ -2804,7 +2804,7 @@ class domain_creator(domain_creator_water,domain_creator_sorbate,domain_creator_
             for j in range(len(domain.id)):
                 index_2=np.where(domain.id==domain.id[j])[0][0]
                 if (f2(f1(domain,index_1),f1(domain,index_2))<2.5):
-                    print f2(f1(domain,index_1),f1(domain,index_2))
+                    print(f2(f1(domain,index_1),f1(domain,index_2)))
                     match_lib[id_list[i]].append(domain.id[j])
         return match_lib
 
@@ -3369,11 +3369,11 @@ class domain_creator(domain_creator_water,domain_creator_sorbate,domain_creator_
             return bond_valence_container
         else:
             if sensor:
-                print 'atom under consideration:',center_atom_id
-                print 'coordinated_atoms:',coordinated_atms
-                print 'following list key,(distance,bond valence before scaling)'
+                print('atom under consideration:',center_atom_id)
+                print('coordinated_atoms:',coordinated_atms)
+                print('following list key,(distance,bond valence before scaling)')
                 for key in output_bv_container.keys():
-                    print key,output_bv_container[key]
+                    print(key,output_bv_container[key])
             return bond_valence_container
 
     def cal_bond_valence1_new2B3(self,domain,center_atom_id,center_atom_el,searching_range=2.5,coordinated_atms=[],wt=100,print_file=False):

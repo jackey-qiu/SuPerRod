@@ -3,9 +3,9 @@
 # -*- Mode: python -*-
 #
 # $Id: Simplex.py,v 1.2 2004/05/31 14:01:06 vivake Exp $
-# 
+#
 # Copyright (c) 2002-2004 Vivake Gupta (vivakeATlab49.com).  All rights reserved.
-# 
+#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation; either version 2 of the
@@ -34,7 +34,7 @@
 Simplex minimizes an arbitrary nonlinear function of N variables by the
 Nedler-Mead Simplex method as described in:
 
-Nedler, J.A. and Mead, R. "A Simplex Method for Function Minimization." 
+Nedler, J.A. and Mead, R. "A Simplex Method for Function Minimization."
     Computer Journal 7 (1965): 308-313.
 
 It makes no assumptions about the smoothness of the function being minimized.
@@ -90,7 +90,7 @@ class Simplex:
         ------
         epsilon       convergence requirement
         maxiters      maximum number of iterations
-        monitor       if non-zero, progress info is output to stdout  
+        monitor       if non-zero, progress info is output to stdout
 
         OUTPUTS
         -------
@@ -123,11 +123,11 @@ class Simplex:
             for vertex in range(0, self.numvars + 1):
                 S1 = S1 + (self.errors[vertex] - F2)**2
             T = math.sqrt(S1 / self.numvars)
-            
+
             # Optionally, print progress information
             if monitor:
-                print 'Iteration = %d   Best = %f   Worst = %f' % (iter,self.errors[self.lowest],self.errors[self.highest])
-                
+                print('Iteration = %d   Best = %f   Worst = %f' % (iter,self.errors[self.lowest],self.errors[self.highest]))
+
             if T <= epsilon:   # We converged!  Break out of loop!
                 break;
             else:                   # Didn't converge.  Keep crunching.
@@ -241,9 +241,9 @@ def objective_function(args):
 def main():
     s = Simplex(objective_function, [1, 1, 1], [2, 4, 6])
     values, err, iter = s.minimize(maxiters = 60, monitor = 0)
-    print 'args = ', values
-    print 'error = ', err
-    print 'iterations = ', iter
+    print('args = ', values)
+    print('error = ', err)
+    print('iterations = ', iter)
 
 if __name__ == '__main__':
     main()

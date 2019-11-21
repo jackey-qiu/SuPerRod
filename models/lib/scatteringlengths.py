@@ -133,13 +133,14 @@ class Database(object):
         '''
         name = name.lower()
         stored_values = object.__getattribute__(self, 'stored_values')
-        if stored_values.has_key(name):
+        # if stored_values.has_key(name):
+        if name in stored_values:
             return stored_values[name]
         else:
             try:
                 stored_values[name] = object.__getattribute__(self,\
                         'lookup_value')(name)
-            except (LookupError, IOError), e:
+            except (LookupError, IOError) as e:
                 raise LookupError('The name %s does not exist in the'\
                     'database'%name)
             return stored_values[name]
@@ -157,7 +158,7 @@ class Database(object):
         Used to (externally) lookup a value in a database to be inserted in
         local one for this object.
         '''
-        print 'Looking up value'
+        print('Looking up value')
         return 1
     
     def reset_database(self):
@@ -289,7 +290,7 @@ def load_f0dabax(filename, create_rho = False):
             real_label = ret.split()[-1]
         # The row contains data
         if label == 'D':
-            temp_dict[real_label.lower()] = map(lambda x: float(x),ret.split())
+            temp_dict[real_label.lower()] = list(map(lambda x: float(x),ret.split()))
     
     f0 = {}
     rho0 = {}
@@ -510,12 +511,12 @@ def read_dabax(filename):
         # The row contains data
         if label == 'Data':
             # To get all values in the table
-            if not temp_dict.has_key(real_label.lower()):
-                temp_dict[real_label.lower()] = map(lambda x:\
-                                                    tofloat(x.split('(')[0]), ret.split())
+            if real_label.lower() not in temp_dict.keys():
+                temp_dict[real_label.lower()] = list(map(lambda x:\
+                                                    tofloat(x.split('(')[0]), ret.split()))
             else:
-                temp_dict[real_label.lower()] += map(lambda x:\
-                                                    tofloat(x.split('(')[0]), ret.split())
+                temp_dict[real_label.lower()] += list(map(lambda x:\
+                                                    tofloat(x.split('(')[0]), ret.split()))
                 
     return temp_dict
 
@@ -549,6 +550,6 @@ def create_scatt_weight(scatt_dict, w_dict):
     sw_dict = {}
     for key in scatt_dict:
         #print key, ' ',scatt_dict[key], ' ',w_dict[key]
-        if w_dict.has_key(key):
+        if key in w_dict.keys():
             sw_dict[key] = scatt_dict[key]/complex(w_dict[key]/0.6022141)
     return sw_dict

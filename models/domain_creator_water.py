@@ -4,7 +4,7 @@ import numpy as np
 from operator import mul
 from numpy.linalg import inv
 from geometry_modules import *
-import domain_creator
+from . import domain_creator
 
 """functions in this class
 adding_oxygen: add one molecule in the frame of spherical sphere (r, theta, phi should be specified)
@@ -42,7 +42,7 @@ def extract_component(domain,id,name_list):
     index=np.where(domain.id==id)[0][0]
     temp=[vars(domain)[name][index] for name in name_list]
     for i in range(len(name_list)):
-        print name_list[i]+'=',temp[i]
+        print(name_list[i]+'=',temp[i])
 
 #set coor to atom with id in domain
 def set_coor(domain,id,coor):

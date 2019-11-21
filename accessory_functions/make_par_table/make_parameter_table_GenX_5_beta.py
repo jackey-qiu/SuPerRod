@@ -337,7 +337,7 @@ def set_table_input_one_by_one(container=[],rgh_group_instance=None,rgh_group_in
     return container
 
 def set_table_input_one_by_one_new(container=[],rgh_group_instance=None,rgh_group_instance_name=None,par_range=None):
-    key=par_range.keys()[0]
+    key=list(par_range.keys())[0]
     container.append([rgh_group_instance_name+'.'+key,str(par_range[key][0]),str(str(par_range[key][3])),str(str(par_range[key][1])),str(par_range[key][2]),'-'])
     return container
 

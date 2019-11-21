@@ -10,7 +10,7 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from matplotlib.path import Path
 from matplotlib.patches import PathPatch
-from color_mate import color_combine_mate as set_color
+from .color_mate import color_combine_mate as set_color
 
 def local_func():
     return None
@@ -36,12 +36,12 @@ def output_errors(edge_length=2.7,top_angle=70,error_top_angle=1,error_theta=1,e
     sin_alpha_right=np.sin(np.deg2rad(top_angle+error_top_angle)/2.)
     tan_alpha_left=np.tan(np.deg2rad(top_angle-error_top_angle)/2.)
     tan_alpha_right=np.tan(np.deg2rad(top_angle+error_top_angle)/2.)
-    print 'error of PbO1 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)+error_delta1
-    print 'error of pbO2 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)
-    print 'error of PbOdistal bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)++error_delta2
-    print 'error of O1PbO2 bond angle:',error_top_angle
-    print 'error of O1PbOdistal and O2PbOdistal bond angle:',error_top_angle+error_theta
-    print 'error of PbFe seperation:',edge_length/4.*(1./tan_alpha_left-1./tan_alpha_right)
+    print('error of PbO1 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)+error_delta1)
+    print('error of pbO2 bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right))
+    print('error of PbOdistal bond length:',edge_length/4.*(1./sin_alpha_left-1./sin_alpha_right)+error_delta2)
+    print('error of O1PbO2 bond angle:',error_top_angle)
+    print('error of O1PbOdistal and O2PbOdistal bond angle:',error_top_angle+error_theta)
+    print('error of PbFe seperation:',edge_length/4.*(1./tan_alpha_left-1./tan_alpha_right))
     return None
 
 
@@ -610,7 +610,7 @@ def plot_CTR_multiple_model_muscovite_matlab_outputs(file_head=file_head_CE,c_pr
     colors_2=set_color(len(dump_files),color_type[0])
     objects=[]
     for i in range(len(dump_files)):
-        print i
+        print(i)
         objects.append([np.loadtxt(os.path.join(file_head,dump_files[i][0]),comments='%'),np.loadtxt(os.path.join(file_head,dump_files[i][1]),comments='%')])
     fig=pyplot.figure(figsize=(6,4))
     ax=fig.add_subplot(1,1,1)
@@ -629,7 +629,7 @@ def plot_CTR_multiple_model_muscovite_matlab_outputs(file_head=file_head_CE,c_pr
     for i in range(len(objects)):
         object_data=objects[i][0]
         max_q=5.588
-        print max_q
+        # print max_q
         object_model=objects[i][1]
         index_use=np.where(object_model[:,0]<max_q)[0]
         object_model=np.append(object_model[index_use,0][:,np.newaxis],object_model[index_use,1][:,np.newaxis],axis=1)
@@ -688,9 +688,9 @@ def plot_CTR_multiple_CTR_datasets_muscovite_matlab(file_head=module_path_locato
     for i in range(len(objects)):
         object_data=objects[i]
         max_q=5.588
-        print max_q
+        print(max_q)
         if object_data[:,2].max()>10:
-            print object_data[:,2].max()
+            print(object_data[:,2].max())
             object_data[:,2]=object_data[:,2]*np.pi*2./19.97
         else:
             pass
@@ -823,7 +823,7 @@ def plot_RAXR_matlab_output_multiple_data_sets(file_heads=file_heads_CE,glob_hea
                 ax.annotate(r'$\rm{(+40)}$',xy=(18.08,data[selected_rows,3][-1]-avg+i_plot*offset),xytext=(18.08,data[selected_rows,3][-1]-avg+i_plot*offset),fontsize=10,**hfont)
             y_lim_max=data[:,3][-1]-avg+i_plot*offset+offset*1.5
             if i_plot==0:
-                print i,i_plot
+                print(i,i_plot)
                 y_lim_min=data[:,3][-1]-avg+i_plot*offset-offset
 
         pyplot.xlim((17.9,18.12))
@@ -1143,8 +1143,8 @@ def plot_multiple_e_profiles_2(file_head=module_path_locator(),dump_files=dump_f
             total_area+=area
             if x1<=cutoff:
                 target_area+=area
-        print '<<Case of '+label+'>>'
-        print 'The percentage of area plot within '+str(cutoff)+' A is:'+str(target_area/total_area*100)+'%'
+        print('<<Case of '+label+'>>')
+        print('The percentage of area plot within '+str(cutoff)+' A is:'+str(target_area/total_area*100)+'%')
         return None
     colors=set_color(len(dump_files),color_type)
     fig=pyplot.figure(figsize=(6.5,9.8))
@@ -1208,8 +1208,8 @@ def plot_multiple_e_profiles_matlab_output(file_head=module_path_locator(),dump_
             total_area+=area
             if x1<=cutoff and x1>=cutoff_from:
                 target_area+=area
-        print '<<Case of '+label+'>>'
-        print 'The percentage of area plot within '+str(cutoff)+' A is:'+str(target_area/total_area*100)+'%'
+        print('<<Case of '+label+'>>')
+        print('The percentage of area plot within '+str(cutoff)+' A is:'+str(target_area/total_area*100)+'%')
         return None
 
     def _cal_integration_(data,cutoff_from=1,cutoff_to=3.4,label=''):#use to calculate the percentage of resonant element area within the cutoff distance from mineral surface
@@ -1223,8 +1223,8 @@ def plot_multiple_e_profiles_matlab_output(file_head=module_path_locator(),dump_
             total_area+=area
             if x1<=cutoff_to and x1>=cutoff_from:
                 target_area+=area
-        print '<<Case of '+label+'>>'
-        print 'The total integration of from '+str(cutoff_from)+'A to'+str(cutoff_to)+' A is:'+str(target_area)
+        print('<<Case of '+label+'>>')
+        print('The total integration of from '+str(cutoff_from)+'A to'+str(cutoff_to)+' A is:'+str(target_area))
         return None
     colors=set_color(len(dump_files),color_type)
     colors=set_color(sum([len(file)-1 for file in dump_files]),color_type)
@@ -1504,7 +1504,7 @@ def fit_e_2(zs=None,water_scaling=1,fit_range=[1,40]):
     pyplot.plot(raxr_eden[0],raxr_eden[1])
     fit_data=np.append(np.array(raxr_eden[0])[:,np.newaxis],(np.array(total_eden[1,:])-np.array(raxr_eden[1]))[:,np.newaxis],axis=1)
     pyplot.figure()
-    print '##############Total e - raxr - water#################'
+    print('##############Total e - raxr - water#################')
     gaussian_fit(fit_data,fit_range=fit_range,zs=zs,water_scaling=water_scaling)
     pyplot.title('Total e - raxr -water')
     return None
@@ -1627,18 +1627,18 @@ def plot_all(path=module_path_locator(),make_offset_of_total_e=False,fit_e_profi
     #now plot the subtracted e density and print out the gaussian fit results
     if fit_e_profile:
         pyplot.figure()
-        print '##############Total e -layer water#################'
+        print('##############Total e -layer water#################')
         #gaussian_fit(e_den_subtracted,zs=None,water_scaling=water_scaling)
         gaussian_fit_DE(e_den_subtracted,zs=3,water_scaling=water_scaling)
         pyplot.title('Total e - layer water')
 
         pyplot.figure()
-        print '#########################RAXR (MI)########################'
+        print('#########################RAXR (MI)########################')
         gaussian_fit(e_den_raxr_MI,zs=None,N=40,water_scaling=water_scaling)
         pyplot.title('RAXR (MI)')
         pyplot.figure()
         '''
-        print '#########################RAXR (MD)########################'
+        print('#########################RAXR (MD)########################')
         gaussian_fit(np.append([data_eden_FS_sub[0]],[data_eden_FS_sub[1]*(np.array(data_eden_FS_sub[1])>0)],axis=0).transpose(),zs=None,N=40,water_scaling=water_scaling)
         pyplot.title('RAXR (MD)')
         pyplot.show()
@@ -1772,13 +1772,13 @@ def plot_all_old(path=module_path_locator(),make_offset_of_total_e=False,fit_e_p
     #now plot the subtracted e density and print out the gaussian fit results
     if fit_e_profile:
         pyplot.figure()
-        print '##############Total e -layer water#################'
+        print('##############Total e -layer water#################')
         #gaussian_fit(e_den_subtracted,zs=None,water_scaling=water_scaling)
         gaussian_fit_DE(e_den_subtracted,zs=3,water_scaling=water_scaling)
         pyplot.title('Total e - layer water')
 
         pyplot.figure()
-        print '#########################RAXR (MI)########################'
+        print('#########################RAXR (MI)########################')
         gaussian_fit(e_den_raxr_MI,zs=None,N=40,water_scaling=water_scaling)
         pyplot.title('RAXR (MI)')
         pyplot.figure()
@@ -1836,24 +1836,24 @@ def gaussian_fit_DE(data,fit_range=[1,40],zs=None,N=8,water_scaling=1):
 
     result=differential_evolution(func_DE, bounds,args=tuple(x))
     popt=result.x
-    print popt
+    print(popt)
     combinded_set=[]
     #print 'z occupancy*4 U(sigma**2)'
     for i in range(0,len(popt),3):
         combinded_set=combinded_set+[abs(popt[i])/N*(abs(popt[i])*np.sqrt(np.pi*2)*5.199*9.027)*4,abs(popt[i+1])**2,popt[i+2]]
         #print '%3.3f\t%3.3f\t%3.3f'%(ctrs[i/2],abs(popt[i])/N*(abs(popt[i+1])*np.sqrt(np.pi*2)*5.199*9.027)*4,abs(popt[i+1])**2)
     combinded_set=np.reshape(np.array(combinded_set),(len(combinded_set)/3,3)).transpose()
-    print combinded_set
+    print(combinded_set)
     #combinded_set=combinded_set.transpose()
     #normalized to full surface unit cell
-    print 'total_occupancy=',np.sum(combinded_set[0,:]/4)
+    print('total_occupancy=',np.sum(combinded_set[0,:]/4))
     #normalized to half unit cell (oc and u have been added to 1 to be used in Matlab input par file)
-    print 'OC_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])'
+    print('OC_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])')
     #the u not U(u**2)
-    print 'U_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])'
-    print 'X_RAXS_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Y_RAXS_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Z_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])'
+    print('U_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])')
+    print('X_RAXS_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Y_RAXS_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Z_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])')
 
 
     fit = func(popt,*x)
@@ -1905,12 +1905,12 @@ def gaussian_fit(data,fit_range=[1,40],zs=None,N=8,water_scaling=1):
     #combinded_set=combinded_set.transpose()
     #normalized to full surface unit cell
     #inputs for GenX refinement
-    print 'total_occupancy=',np.sum(combinded_set[1,:]/4)
-    print 'OC_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])'
-    print 'U_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])'
-    print 'X_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Y_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Z_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])'
+    print('total_occupancy=',np.sum(combinded_set[1,:]/4))
+    print('OC_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])')
+    print('U_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])')
+    print('X_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Y_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Z_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])')
 
 
     fit = func([x,ctrs], *popt)
@@ -2055,12 +2055,12 @@ def fit_e_density(path=module_path_locator(),fit_range=[1,40],zs=None,N=8):
         #print '%3.3f\t%3.3f\t%3.3f'%(ctrs[i/2],abs(popt[i])/N*(abs(popt[i+1])*np.sqrt(np.pi*2)*5.199*9.027)*4,abs(popt[i+1])**2)
     combinded_set=np.reshape(np.array(combinded_set),(len(combinded_set)/3,3)).transpose()
     #combinded_set=combinded_set.transpose()
-    print 'total_occupancy=',np.sum(combinded_set[1,:]/4)
-    print 'OC_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])'
-    print 'U_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])'
-    print 'X_RAXS_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Y_RAXS_LIST=[0.5]*',len(combinded_set[1,:])
-    print 'Z_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])'
+    print('total_occupancy=',np.sum(combinded_set[1,:]/4))
+    print('OC_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[1,:]]),'])')
+    print('U_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[2,:]]),'])')
+    print('X_RAXS_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Y_RAXS_LIST=[0.5]*',len(combinded_set[1,:]))
+    print('Z_RAXS_LIST=np.array([',','.join([str(each) for each in combinded_set[0,:]]),'])')
 
 
     fit = func([x,ctrs], *popt)

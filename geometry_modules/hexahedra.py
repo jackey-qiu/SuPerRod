@@ -309,7 +309,7 @@ class steric_check(share_edge):
         self.edge=np.array([p0,p1])
         self.cutting_limit=cutting_limit
         self.container=np.zeros((1,12))[0:0]
-        print "distance between anchor points is ",f2(p0,p1),'anstrom'
+        print("distance between anchor points is ",f2(p0,p1),'anstrom')
     def steric_check(self,theta_res=0.1,phi=np.pi/2,flag='1_1+0_1',extend_flag='type1',mirror=False,print_path=None):
         #consider the steric constrain, flag '1_1+0_1' (one up_down type and one middel layer atm for the anchor point)
         #is more favorable, 0_2 or 2_0 has distance too much high that it is not easy to be fit into the rcut hematite case
@@ -357,13 +357,13 @@ class steric_check(share_edge):
                                 self.container[:,9],self.container[:,10]-0.7558,\
                                 self.container[:,11]-7.3707,],names='phi,theta,low,A1,A2,A3,P10,P11,P12,P20,P21,P22')
         data.sort(order=('low','phi','theta'))
-        print "phi,theta,low_dt_limit,A_x,A_y,A_z,P1_x,P1_y,P1_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z"
+        print("phi,theta,low_dt_limit,A_x,A_y,A_z,P1_x,P1_y,P1_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z")
         if print_path!=None:
             np.savetxt(print_path,data,"%5.3f")
-            for i in np.loadtxt(print_path):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n"
+            for i in np.loadtxt(print_path):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n")
         else:
             np.savetxt('test',data,"%5.3f")
-            for i in np.loadtxt('test'):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n"
+            for i in np.loadtxt('test'):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n")
             os.remove('test')
             
 class share_corner(share_edge):
@@ -432,18 +432,18 @@ class steric_check2(share_corner2):
                                 self.container[:,12],self.container[:,13]-0.7558,\
                                 self.container[:,14]-7.3707],names='phi,theta,low,A1,A2,A3,P10,P11,P12,P20,P21,P22,P30,P31,P32')
         data.sort(order=('low','phi'))
-        print "phi,0,low_dt_limit,A_x,A_y,A_z,P1_x,P1_y,P1_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z"
+        print("phi,0,low_dt_limit,A_x,A_y,A_z,P1_x,P1_y,P1_z,P2_x,P2_y,P2_z,P3_x,P3_y,P3_z")
         if print_path!=None:
             np.savetxt(print_path,data,"%5.3f")
-            for i in np.loadtxt(print_path):print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n"
+            for i in np.loadtxt(print_path):print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n")
         else:
             np.savetxt('test',data,"%5.3f")
             for i in np.loadtxt('test'):
-                print "["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n"
+                print("["+",".join(["%2.3f" for j in i])%tuple(i)+"]\n")
             os.remove('test')
             
 if __name__=='__main__':
     test1=hexahedra_4.share_edge(np.array([[0.,0.,0],[4.,2.,-1]]))
     test1.cal_p2(theta=0,phi=np.pi/2,flag='1_1+0_1',extend_flag='type1')
     test1.share_face_init(flag=test1.flag)
-    print test1.face,test1.p3,test1.p4,test1.center_point
+    print(test1.face,test1.p3,test1.p4,test1.center_point)

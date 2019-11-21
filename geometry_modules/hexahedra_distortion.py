@@ -334,4 +334,4 @@ if __name__=='__main__':
     test1=hexahedra_4.share_edge(np.array([[0.,0.,0],[4.,2.,-1]]))
     test1.cal_p2(theta=0,phi=np.pi/2,flag='1_1+0_1',extend_flag='type1')
     test1.share_face_init(flag=test1.flag)
-    print test1.face,test1.p3,test1.p4,test1.center_point
+    print(test1.face,test1.p3,test1.p4,test1.center_point)
