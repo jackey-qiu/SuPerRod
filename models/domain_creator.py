@@ -1442,7 +1442,7 @@ def print_structure_files_muscovite_new(domain_list='',z_shift=0.8,number_gaussi
     for domain_index in range(len(domain_list)):
         domain=domain_list[domain_index]
         data=domain._extract_values()
-        index_all=range(len(data[0]))
+        index_all=list(range(len(data[0])))
         index=index_all[0:74]+index_all[132:]
         index_f2=index_all[0:74]+index_all[132:(len(data[0])-number_gaussian)]
         c=(np.max(data[2])+0.3-z_shift)*20.1058
