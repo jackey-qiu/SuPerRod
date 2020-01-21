@@ -111,14 +111,14 @@ in <code>dimes.py</code> is <code>sqrt(2)*pi*[]</code>
 '''
 
 import numpy as np
-from utils import f, rho
+from .utils import f, rho
 import time
 
 try:
     from scipy import weave
     _turbo_sim = True
 except:
-    print 'Info: Could not import weave, turbo off'
+    print('Info: Could not import weave, turbo off')
     _turb_sim = False
 
 __pars__ = ['Sample', 'UnitCell', 'Slab', 'AtomGroup', 'Instrument']
@@ -1179,9 +1179,9 @@ if __name__ == '__main__':
     t1 = time.time()
     sf = sample2.calc_fs(h, k, l)
     t2 = time.time()
-    print 'Python: %f seconds'%(t2-t1)
+    print('Python: %f seconds'%(t2-t1))
     t3 = time.time()    
     sft = sample2.turbo_calc_fs(h, k, l)
     t4 = time.time()
-    print 'Inline C: %f seconds'%(t4-t3)
+    print('Inline C: %f seconds'%(t4-t3))
     
